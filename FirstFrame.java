@@ -24,11 +24,11 @@ public class FirstFrame extends Frame {
      * Arraylist. This also calls the readLines() method
      * */
 
-    public FirstFrame(String filename){
-        super(filename) ;
+    public FirstFrame(String filename, Category[] catArray, GUI gui){
+        super(filename, catArray, gui);
         marchThroughImage(image);
         ObjectLines = new ArrayList<ArrayList<Pixel>>() ;
-        readLines() ;
+        readLines();
     }
 
     /**
