@@ -74,6 +74,19 @@ public class Frame extends Component {
             System.err.println(e.getMessage());
         }
     }
+    
+    public Frame(String filename){
+        try {
+            categoryArray = catArray;
+            this.gui = gui;
+            image =
+                    ImageIO.read(this.getClass().getResource(filename));
+            width = image.getWidth();
+            height = image.getHeight();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
 
     /**
      *@method getObjectPixels()
