@@ -18,8 +18,11 @@ public class Driver extends Thread{
     private static File gifFrames;
     private static Category[] arrayOfCategories;
     private static GUI gui;
+    private static String inFolder, outFolder
 
     public Driver(String inputFolder, String outputFolder, Category[] catArray){
+        inFolder = inputFolder;
+        outFolder = outputFolder;
         gifFrames = new File(inputFolder);
         arrayOfCategories = catArray;
     }
@@ -73,7 +76,7 @@ public class Driver extends Thread{
     public static boolean checkFile(File f){
         boolean okay = false;
         if(checkFileFormat(f)) {
-            Frame tempFrame = new Frame("Dir6/"+f.getName());
+            Frame tempFrame = new Frame(inFolder + "/" + f.getName());
             if(foundFirst){
                 if(checkSize(tempFrame)) {
                     okay = true;
