@@ -281,16 +281,16 @@ public class GUI{
             }
         });
 
-        JButton cancelButton = new JButton("Cancel");
-        cancelButton.setBackground(customOrange);
-        panelButtons.add(cancelButton);
-        cancelButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
-                // Image img = Toolkit.getDefaultToolkit().createImage("giphyNew.gif");
-                // ImageIcon imageI = new ImageIcon(img);
-                processingGif.setIcon(null); //temp test if gif disappears correctly
-            }
-        });
+//         JButton cancelButton = new JButton("Cancel");
+//         cancelButton.setBackground(customOrange);
+//         panelButtons.add(cancelButton);
+//         cancelButton.addActionListener(new ActionListener(){
+//             public void actionPerformed(ActionEvent e){
+//                 // Image img = Toolkit.getDefaultToolkit().createImage("giphyNew.gif");
+//                 // ImageIcon imageI = new ImageIcon(img);
+//                 processingGif.setIcon(null); //temp test if gif disappears correctly
+//             }
+//         });
 
         return panelButtons;
     }
