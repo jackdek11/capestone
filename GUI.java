@@ -49,6 +49,7 @@ public class GUI{
     private String[][] col;
     private DefaultTableModel tableModel;
     private int index;
+    private Category[] catArray;
 
     public GUI(){
         JFrame frame = new JFrame();
@@ -249,7 +250,10 @@ public class GUI{
                 }
                 else{
                     readyButton.setEnabled(false);
-                    pro = new Driver(inputFolder, outputFolder,gui);
+                    
+                    //code that adds to catArray.
+                    
+                    pro = new Driver(inputFolder, outputFolder,catArray, gui);
 
                     // Image img = Toolkit.getDefaultToolkit().createImage("giphyNew.gif"); //unsure why icon not shown before pro.start()
                     // ImageIcon imageI = new ImageIcon(img);
@@ -385,16 +389,12 @@ public class GUI{
     }
 
     public JPanel createPanelOutputLabels(){
-        // col = new String[]{"Number of Frames Detected: ","     ", "Number of Disks in Red Cat.: ", "     "};
-        // String a[] = {"Number of Objects Detected: .......", "     ","Number of Disks in Green Cat.:", "     "};
-        // String b[] = {"Number of Disks Detected:", "    "," Number of Disks in Blue Cat.: ", "    "};
         col = new String[][]{{"Number of Frames Detected: ","     ", "Number of Disks in Red Cat.: ", "     "}, //easier solution to create JTable
                 {"Number of Objects Detected: ", "     ","Number of Disks in Green Cat.:", "     "},
                 {"Number of Disks Detected: ", "    ","Number of Disks in Blue Cat.: ", "    "}};
         String[] a = {"1","2","3","4"};
         tableModel = new DefaultTableModel(col, a);
         JTable table = new JTable(tableModel){
-
             public boolean getScrollableTracksViewportWidth(){
                 return getPreferredSize().width < panelOutputLabels.getWidth();
             }
@@ -403,8 +403,6 @@ public class GUI{
                 return getPreferredSize().height < panelOutputLabels.getHeight();
             }
         };
-        // tableModel.addRow(a);
-        // tableModel.addRow(b);
         table.setTableHeader(null);
         table.setAutoResizeMode( JTable.AUTO_RESIZE_OFF );
         table.setBackground(customGrey2);
@@ -419,8 +417,6 @@ public class GUI{
         panelOutputLabels.setBackground(customGrey2);
 
         JScrollPane scrollPane = new JScrollPane(table);
-        //scrollPane.getViewport().setBackground(customGrey2);
-        //scrollPane.getViewport().setForeground(customGrey2);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
         panelOutputLabels.add(scrollPane,BorderLayout.CENTER);
 
