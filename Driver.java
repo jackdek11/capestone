@@ -50,7 +50,7 @@ public class Driver extends Thread{
             //System.out.println(pathOfGifFile);
             if(checkFile(g)) { //check file will check if file is a gif or not
                 if (!foundFirst) {
-                    firstF = new FirstFrame(pathOfGifFile); //need to parse category array as well
+                    firstF = new FirstFrame(pathOfGifFile, catArray, gui); //need to parse category array as well
                     currentImage= firstF.getPixelArray();
                     frames.add(firstF);
                     width = firstF.getWidth();
@@ -58,7 +58,7 @@ public class Driver extends Thread{
                     foundFirst = true;
                 }
                 else {
-                    tempFrame=new Frame(pathOfGifFile);
+                    tempFrame=new Frame(pathOfGifFile, catArray, gui);
                     tempFrame.marchForwardThroughBuffer(currentImage);
                     currentImage = tempFrame.getPixelArray();
                     frames.add(tempFrame); //need to parse category array as well
