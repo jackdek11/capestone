@@ -18,7 +18,7 @@ public class Driver extends Thread{
     private static File gifFrames;
     private static Category[] arrayOfCategories;
     private static GUI gui;
-    private static String inFolder, outFolder
+    private static String inFolder, outFolder;
 
     public Driver(String inputFolder, String outputFolder, Category[] catArray){
         inFolder = inputFolder;
