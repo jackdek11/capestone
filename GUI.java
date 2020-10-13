@@ -318,6 +318,71 @@ public class GUI{
 
         return panelFrames;
     }
+    
+    public void createProcessedFrames(){
+        File folder = new File(outputFolder);
+        System.out.println("apfijpfj");
+        if (folder.isDirectory()){
+            System.out.println("Whaa");
+            File[] listOfProcessedFrames = folder.listFiles();
+            panelFrames.remove(processingGif);
+
+            JPanel theFrames = new JPanel();
+            theFrames.setLayout(new BorderLayout());
+            theFrames.setPreferredSize(new Dimension(920,400));
+            theFrames.setMaximumSize(new Dimension(920,450));
+            theFrames.setBackground(customGrey3);
+            JLabel displayProcessedGif = new JLabel();
+            Image img = Toolkit.getDefaultToolkit().createImage(outputFolder + "\\" + listOfProcessedFrames[0].getName());
+            ImageIcon iconToDisplay = new ImageIcon(img);
+            displayProcessedGif.setIcon(iconToDisplay);
+            theFrames.add(displayProcessedGif, BorderLayout.CENTER);
+            displayProcessedGif.setHorizontalAlignment(JLabel.CENTER);
+            displayProcessedGif.setVerticalAlignment(JLabel.CENTER);
+
+            JPanel theButtons = new JPanel();
+            theButtons.setBackground(customGrey3);
+            JButton previous = new JButton("Previous");
+            theButtons.add(previous);
+            index = 0;
+            if ((index - 1)<= -1){
+                previous.setEnabled(false);
+            }
+            previous.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    if ((listOfProcessedFrames.length - 1)<= -1){
+                        previous.setEnabled(false);
+                    }
+                    Image imgPrev = Toolkit.getDefaultToolkit().createImage(listOfProcessedFrames[index-1].getName());
+                    ImageIcon prevIconToDisplay = new ImageIcon(imgPrev);
+                    displayProcessedGif.setIcon(prevIconToDisplay);
+                }
+            });
+
+            JButton next = new JButton("Next");
+            theButtons.add(next);
+            if ((index + 1)>= listOfProcessedFrames.length){
+                next.setEnabled(false);
+            }
+            next.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e){
+                    if ((listOfProcessedFrames.length + 1)>= listOfProcessedFrames.length){
+                        next.setEnabled(false);
+                    }
+                    Image imgNext = Toolkit.getDefaultToolkit().createImage(listOfProcessedFrames[index+1].getName());
+                    ImageIcon nextIconToDisplay = new ImageIcon(imgNext);
+                    displayProcessedGif.setIcon(nextIconToDisplay);
+                }
+            });
+            panelFrames.add(theFrames, BorderLayout.CENTER);
+            panelFrames.add(theButtons, BorderLayout.SOUTH);
+            panelFrames.revalidate();
+            panelFrames.repaint();
+        }
+        else{
+            System.out.println("File is not a directory.");
+        }
+    }
 
     public JPanel createPanelOutputLabels(){
         // col = new String[]{"Number of Frames Detected: ","     ", "Number of Disks in Red Cat.: ", "     "};
