@@ -47,6 +47,7 @@ public class GUI{
     private JLabel processingGif;
     private String[][] col;
     private DefaultTableModel tableModel;
+    private int index;
 
     public GUI(){
         JFrame frame = new JFrame();
@@ -176,12 +177,53 @@ public class GUI{
         JPanel panelCategories = new JPanel();
         panelCategories.setBorder(BorderFactory.createTitledBorder("Categories"));
         ((javax.swing.border.TitledBorder)panelCategories.getBorder()).setTitleColor(Color.white);
-        panelCategories.setLayout(new BoxLayout(panelCategories, BoxLayout.X_AXIS));
+        panelCategories.setLayout(new GridLayout(3,1));
         panelCategories.setMaximumSize(new Dimension(335,470));
         panelCategories.setBackground(customGrey3);
+    	
+        JPanel redCategory = new JPanel();
+    	//redCategory.setBackground(Color.red);
+    	panelCategories.add(redCategory);
+    	redCategory.setLayout(new GridLayout(3,1));
+        redCategory.setBackground(customGrey3); 
+        redCategory.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+    	JRadioButton radioRed = new JRadioButton("Red");
+    	radioRed.setBackground(Color.red);
+    	redCategory.add(radioRed);
+    	JTextField minRed = new JTextField("Minimum");
+    	redCategory.add(minRed);
+    	JTextField maxRed = new JTextField("Maximum");
+    	redCategory.add(maxRed);
+    	
+    	JPanel blueCategory = new JPanel();
+    	panelCategories.add(blueCategory);
+    	blueCategory.setLayout(new GridLayout(3,1));
+        blueCategory.setBackground(customGrey3); 
+        blueCategory.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+    	JRadioButton radioBlue = new JRadioButton("Blue");
+    	radioBlue.setBackground(Color.blue);
+    	blueCategory.add(radioBlue);
+    	JTextField minBlue = new JTextField("Minimum");
+    	blueCategory.add(minBlue);
+    	JTextField maxBlue = new JTextField("Maximum");
+    	blueCategory.add(maxBlue);
+    	
+    	JPanel greenCategory = new JPanel();
+    	panelCategories.add(greenCategory);
+    	greenCategory.setLayout(new GridLayout(3,1));
+        greenCategory.setBackground(customGrey3); 
+        greenCategory.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+    	JRadioButton radioGreen = new JRadioButton("Green");
+    	radioGreen.setBackground(Color.green);
+    	greenCategory.add(radioGreen);
+    	JTextField minGreen = new JTextField("Minimum");
+    	greenCategory.add(minGreen);
+    	JTextField maxGreen = new JTextField("Maximum");
+    	greenCategory.add(maxGreen);
+
         return panelCategories;
     }
-
+    
     public void changeIcon(ImageIcon img){
         processingGif.setIcon(img);
     }
@@ -229,7 +271,7 @@ public class GUI{
                         v.printStackTrace();
                     }
                     readyButton.setEnabled(true);
-
+                    createProcessedFrames();
                 }
             }
         });
