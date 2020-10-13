@@ -20,6 +20,8 @@ public class Frame extends Component {
     public ArrayList<ArrayList<Pixel>> pixelArray;
     public LinkedList<Pixel> objectPixels;
     public ArrayList<Object> objects;
+    private Category[] categoryArray;
+    private GUI gui;
 
     public void setPixelARGB(int pixel, ArrayList<Pixel> temp,int w,int h) {
         int red = (pixel >> 16) & 0xff;
@@ -57,8 +59,10 @@ public class Frame extends Component {
         }
     }
 
-    public Frame(String filename){
+    public Frame(String filename, Category[] catArray, GUI gui){
         try {
+            categoryArray = catArray;
+            this.gui = gui;
             image =
                     ImageIO.read(this.getClass().getResource(filename));
             width = image.getWidth();
