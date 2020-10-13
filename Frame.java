@@ -77,8 +77,6 @@ public class Frame extends Component {
     
     public Frame(String filename){
         try {
-            categoryArray = catArray;
-            this.gui = gui;
             image =
                     ImageIO.read(this.getClass().getResource(filename));
             width = image.getWidth();
