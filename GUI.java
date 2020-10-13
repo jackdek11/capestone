@@ -24,6 +24,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
+import javax.swing.JRadioButton;
 
 import java.io.File;
 import javax.imageio.ImageIO;
