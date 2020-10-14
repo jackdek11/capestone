@@ -18,10 +18,22 @@ public class Frame extends Component {
     public BufferedImage image;
     public LinkedList<Circle> circles;
     public ArrayList<ArrayList<Pixel>> pixelArray;
-    public LinkedList<Pixel> objectPixels;
     public ArrayList<Object> objects;
     private Category[] categoryArray;
     private GUI gui;
+
+    public void printPan(int index){
+        for (int i =0; i < height; i++) {
+            for (int j = index; j < index+width; j++) {
+                if (pixelArray.get(i).get(j).aboveThreshold(50)) {
+                    System.out.print("0");
+                } else {
+                    System.out.print(" ");
+                }
+            }
+            System.out.println();
+        }
+    }
 
     public void setPixelARGB(int pixel, ArrayList<Pixel> temp,int w,int h) {
         int red = (pixel >> 16) & 0xff;
@@ -41,21 +53,11 @@ public class Frame extends Component {
         }
     }
 
-    public ArrayList<ArrayList<Pixel>> marchForwardThroughBuffer(ArrayList<ArrayList<Pixel>> pastArray){
+    public void marchForwardThroughBuffer(){
         for (int i=0;i<height;i++){
-            pastArray.get(i).remove(0);
+            //pixelArray.get(i).remove(0);
             int pixel = image.getRGB(width-1,i);
-            setPixelARGB(pixel,pastArray.get(i),i,width-1);
-        }
-        pixelArray=pastArray;
-        return pixelArray;
-    }
-
-    public void checkPixelBuffer(){
-        for(int i=0;i<height;i++){
-            if(pixelArray.get(width-1).get(i).aboveThreshold(120)&&(!pixelArray.get(width-1).get(i).owned)){
-                objectPixels.add(pixelArray.get(width-1).get(i));
-            }
+            setPixelARGB(pixel,pixelArray.get(i),i,width-1);
         }
     }
 
@@ -85,6 +87,7 @@ public class Frame extends Component {
             System.err.println(e.getMessage());
         }
     }
+    Frame(){}
 
     /**
      *@method getObjectPixels()
