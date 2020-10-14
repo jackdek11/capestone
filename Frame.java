@@ -1,8 +1,8 @@
 /**
- *@author Jack de Kock
- *@version 29th August 2020
- *Frame object which extends Component and builds the checks the last pixels for new object pixels
- */
+        *@author Jack de Kock
+        *@version 29th August 2020
+        *Frame object which extends Component and builds the checks the last pixels for new object pixels
+        */
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -74,7 +74,7 @@ public class Frame extends Component {
             System.err.println(e.getMessage());
         }
     }
-    
+
     public Frame(String filename){
         try {
             image =
