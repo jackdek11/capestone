@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public class FirstFrame extends Frame {
 
-
     /**
      * @param ObjectLines
      * This Parameter is an arraylist of arraylists of pixels. It holds all the lines of
@@ -43,6 +42,18 @@ public class FirstFrame extends Frame {
             buildLines(pixelArray.get(i)) ;
         }
         mergeLines() ;
+        getObjects();
+    }
+
+    public void getObjects(){
+        System.out.println("Number of objects: "+objects.size());
+        for (int i=0;i<objects.size();i++){
+            if(objects.get(i).checkCircle()){
+                Circle tempCircle=objects.get(i).circlefy();
+                circles.add(tempCircle);
+            }
+        }
+        System.out.println("Number of circles: "+circles.size());
     }
 
     /**
@@ -65,7 +76,6 @@ public class FirstFrame extends Frame {
                     }
                 }
                 objects.add(newObject) ;
-
             }
         }
     }
@@ -90,60 +100,5 @@ public class FirstFrame extends Frame {
                 }
             }
         }
-    }/*
-    public static void main(String[] args) {
-        FirstFrame firstFrame = new FirstFrame("Dir6/testseq100008.gif");
-        ArrayList<ArrayList<Pixel>> currentPixels=firstFrame.getPixelArray();
-        Frame frame1 = new Frame("Dir6/testseq100009.gif");
-        frame1.setPixelArray(currentPixels);
-        frame1.marchForwardThroughBuffer();
-        Frame frame2 = new Frame("Dir6/testseq100010.gif");
-        frame2.setPixelArray(frame1.getPixelArray());
-        frame2.marchForwardThroughBuffer();
-        Frame frame3 = new Frame("Dir6/testseq100011.gif");
-        frame3.setPixelArray(frame2.getPixelArray());
-        frame3.marchForwardThroughBuffer();
-        for (int i = 0; i < frame3.ObjectLines.size(); i++) {
-            for (int j = 0; j < frame3.ObjectLines.get(i).size(); j++) {
-                frame3.ObjectLines.get(i).get(j).changeColorBlue();
-            }
-        }
-        for (int i = 0; i < frame3.height; i++) {
-            for (int j = 0; j < frame3.width; j++) {
-                if (frame3.pixelArray.get(i).get(j).aboveThreshold(50)) {
-                    System.out.print("0");
-                } else {
-                    System.out.print(" ");
-                }
-            }
-            System.out.println();
-        }
-    }
-}*/
-
-    public static void main(String[] args) {
-        Category[] categories=new Category[3];
-        GUI gui=new GUI();
-        FirstFrame frame= new FirstFrame("Dir6/testseq100000.gif",categories,gui) ;
-        for(int i =0;i<frame.ObjectLines.size();i++){
-            for(int j=0;j<frame.ObjectLines.get(i).size();j++){
-                frame.ObjectLines.get(i).get(j).changeColorBlue() ;
-            }
-        }
-        for (int i=0;i<frame.objects.get(5).pixels.size();i++){
-            frame.objects.get(5).pixels.get(i).changeColorRed() ;
-        }
-        for (int i=0;i< frame.height;i++){
-            for (int j=0;j< frame.width;j++){
-                if (frame.pixelArray.get(i).get(j).aboveThreshold(50)){
-                    System.out.print((frame.pixelArray.get(i).get(j).printPixel())) ;
-                }
-                else{
-                    System.out.print(" ") ;
-                }
-            }
-            System.out.println() ;
-        }
-        System.out.println(frame.objects.size());
     }
 }
