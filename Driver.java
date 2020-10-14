@@ -21,10 +21,9 @@ public class Driver extends Thread{
     private static String inFolder, outFolder;
 
     public Driver(String inputFolder, String outputFolder, Category[] catArray, GUI gui){
-        inFolder = inputFolder;
-        outFolder = outputFolder;
-        arrayOfCategories = catArray;
-        this.gui = gui;
+        inFolder=inputFolder;
+        outFolder=outputFolder;
+        this.gui=gui;
         gifFrames = new File(inputFolder);
         arrayOfCategories = catArray;
     }
@@ -52,7 +51,7 @@ public class Driver extends Thread{
             //System.out.println(pathOfGifFile);
             if(checkFile(g)) { //check file will check if file is a gif or not
                 if (!foundFirst) {
-                    firstF = new FirstFrame(pathOfGifFile, arrayOfCategories, gui); //need to parse category array as well
+                    firstF = new FirstFrame(pathOfGifFile,arrayOfCategories,gui); //need to parse category array as well
                     currentImage= firstF.getPixelArray();
                     frames.add(firstF);
                     width = firstF.getWidth();
@@ -60,7 +59,7 @@ public class Driver extends Thread{
                     foundFirst = true;
                 }
                 else {
-                    tempFrame=new Frame(pathOfGifFile, arrayOfCategories, gui);
+                    tempFrame=new Frame(pathOfGifFile);
                     tempFrame.marchForwardThroughBuffer(currentImage);
                     currentImage = tempFrame.getPixelArray();
                     frames.add(tempFrame); //need to parse category array as well
@@ -78,7 +77,7 @@ public class Driver extends Thread{
     public static boolean checkFile(File f){
         boolean okay = false;
         if(checkFileFormat(f)) {
-            Frame tempFrame = new Frame(inFolder + "/" + f.getName());
+            Frame tempFrame = new Frame("Dir6/"+f.getName());
             if(foundFirst){
                 if(checkSize(tempFrame)) {
                     okay = true;
@@ -130,9 +129,9 @@ public class Driver extends Thread{
 
     public void run(){
         boolean working = true;
-//         Image img = Toolkit.getDefaultToolkit().createImage("giphyNew.gif");
-//         ImageIcon imageI = new ImageIcon(img);
-//         gui.changeIcon(imageI);
+        Image img = Toolkit.getDefaultToolkit().createImage("giphyNew.gif");
+        ImageIcon imageI = new ImageIcon(img);
+        gui.changeIcon(imageI);
         while(working) {
             frames = new ArrayList<Frame>();
             if(gifFrames.isDirectory()) {
