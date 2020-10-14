@@ -40,7 +40,7 @@ public class Driver extends Thread{
         foundFirst = false;
         for (File g: gif) {
             String pathOfGifFile = gifFolder.getName() + "/" + g.getName();
-            System.out.println(g.getName());
+//             System.out.println(g.getName());
             if(checkFile(g)) { //check file will check if file is a gif or not
                 if (!foundFirst) {
                     firstF = new FirstFrame(pathOfGifFile,arrayOfCategories,gui); //need to parse category array as well
