@@ -1,11 +1,10 @@
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.*;
 import java.awt.image.BufferedImage;
 import java.awt.Toolkit;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.text.html.HTMLDocument;
 
 public class Driver extends Thread{
     private static ArrayList<Frame> frames;
@@ -29,16 +28,7 @@ public class Driver extends Thread{
     }
 
     public static void proofOfConcept(){
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                if (frames.get(20).pixelArray.get(i).get(j).aboveThreshold(50)) {
-                    System.out.print("0");
-                } else {
-                    System.out.print(" ");
-                }
-            }
-            System.out.println();
-        }
+        frames.get(70).printPan(70);
     }
 
     public void LoadVideo(File gifFolder) {
@@ -60,7 +50,8 @@ public class Driver extends Thread{
                 }
                 else {
                     tempFrame=new Frame(pathOfGifFile);
-                    tempFrame.marchForwardThroughBuffer(currentImage);
+                    tempFrame.setPixelArray(currentImage);
+                    tempFrame.marchForwardThroughBuffer();
                     currentImage = tempFrame.getPixelArray();
                     frames.add(tempFrame); //need to parse category array as well
                 }
