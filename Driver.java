@@ -70,7 +70,7 @@ public class Driver extends Thread{
     public static boolean checkFile(File f){
         boolean okay = false;
         if(checkFileFormat(f)) {
-            Frame tempFrame = new Frame("Dir6/"+f.getName());
+            Frame tempFrame = new Frame(outFolder+ "/" +f.getName());
             if(foundFirst){
                 if(checkSize(tempFrame)) {
                     okay = true;
@@ -122,9 +122,9 @@ public class Driver extends Thread{
 
     public void run(){
         boolean working = true;
-        Image img = Toolkit.getDefaultToolkit().createImage("giphyNew.gif");
-        ImageIcon imageI = new ImageIcon(img);
-        gui.changeIcon(imageI);
+//         Image img = Toolkit.getDefaultToolkit().createImage("giphyNew.gif");
+//         ImageIcon imageI = new ImageIcon(img);
+//         gui.changeIcon(imageI);
         while(working) {
             frames = new ArrayList<Frame>();
             if(gifFrames.isDirectory()) {
