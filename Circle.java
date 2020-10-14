@@ -4,6 +4,10 @@ public class Circle extends Object{
     public Circle(){
         super();
     }
+    
+    public Circle(ArrayList<Pixel> pixels) {
+		 this.pixels = pixels;
+	}
 
     public void changeColour(int Category){
         for(int i=0;i<pixels.size();i++){
