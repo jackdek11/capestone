@@ -10,11 +10,11 @@ import java.util.ArrayList;
 public class FirstFrame extends Frame {
 
 
-/**
- * @param ObjectLines
- * This Parameter is an arraylist of arraylists of pixels. It holds all the lines of
- * consecutive pixels above the threshold of 50
- * */
+    /**
+     * @param ObjectLines
+     * This Parameter is an arraylist of arraylists of pixels. It holds all the lines of
+     * consecutive pixels above the threshold of 50
+     * */
 
     public ArrayList<ArrayList<Pixel>> ObjectLines ;
 
@@ -80,30 +80,17 @@ public class FirstFrame extends Frame {
     public void buildLines(ArrayList<Pixel> pixels){
         ArrayList<Pixel> newLine = new ArrayList<Pixel>() ;
         for (int i=0;i<width;i++){
-            if(pixels.get(i).aboveThreshold(50)){
+            if(pixels.get(i).aboveThreshold(120)){
                 newLine.add(pixels.get(i)) ;
-                if((i==(width-1))||(!pixels.get(i+1).aboveThreshold(50))){
+                if((i==(width-1))||(!pixels.get(i+1).aboveThreshold(120))){
                     if(!newLine.isEmpty()){
-                            ObjectLines.add(newLine) ;
-                            newLine = new ArrayList<Pixel>() ;
+                        ObjectLines.add(newLine) ;
+                        newLine = new ArrayList<Pixel>() ;
                     }
                 }
             }
         }
-    }
-
-    public static void main(String[] args) {
-        FirstFrame first= new FirstFrame("Dir6/testseq100000.gif");
-        for (int i=0;i<first.objects.size();i++){
-            if(first.objects.get(i).checkCircle()){
-                Circle circle = (Circle) first.objects.get(i);
-                first.circles.add(circle);
-            }
-        }
-
-    }
-
-    /*
+    }/*
     public static void main(String[] args) {
         FirstFrame firstFrame = new FirstFrame("Dir6/testseq100008.gif");
         ArrayList<ArrayList<Pixel>> currentPixels=firstFrame.getPixelArray();
@@ -131,11 +118,13 @@ public class FirstFrame extends Frame {
             }
             System.out.println();
         }
-    }*/
-}
-/*
+    }
+}*/
+
     public static void main(String[] args) {
-        FirstFrame frame= new FirstFrame("Dir6/testseq100000.gif") ;
+        Category[] categories=new Category[3];
+        GUI gui=new GUI();
+        FirstFrame frame= new FirstFrame("Dir6/testseq100000.gif",categories,gui) ;
         for(int i =0;i<frame.ObjectLines.size();i++){
             for(int j=0;j<frame.ObjectLines.get(i).size();j++){
                 frame.ObjectLines.get(i).get(j).changeColorBlue() ;
@@ -146,8 +135,8 @@ public class FirstFrame extends Frame {
         }
         for (int i=0;i< frame.height;i++){
             for (int j=0;j< frame.width;j++){
-                if (frame.pixelArray[i][j].aboveThreshold(50)){
-                    System.out.print(frame.pixelArray[i][j].printPixel()) ;
+                if (frame.pixelArray.get(i).get(j).aboveThreshold(50)){
+                    System.out.print((frame.pixelArray.get(i).get(j).printPixel())) ;
                 }
                 else{
                     System.out.print(" ") ;
@@ -155,4 +144,6 @@ public class FirstFrame extends Frame {
             }
             System.out.println() ;
         }
-    }*/
+        System.out.println(frame.objects.size());
+    }
+}
