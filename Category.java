@@ -13,7 +13,7 @@ public class Category{
 			this.greens = greens;
 	}
 	
-	public String getColour() {
+	public String getCategoryColour() {
 		return colour;
 	}
 	
