@@ -8,7 +8,7 @@ import javax.swing.text.html.HTMLDocument;
 
 public class Driver extends Thread{
     private static ArrayList<Frame> frames;
-    private ArrayList<ArrayList<Pixel>> currentImage;
+    private static ArrayList<ArrayList<Pixel>> currentImage;
     private static File gif;
     private static FirstFrame firstF;
     private static Frame tempFrame;
@@ -28,7 +28,9 @@ public class Driver extends Thread{
     }
 
     public static void proofOfConcept(){
-        frames.get(70).printPan(70);
+        Panarama pan = new Panarama(currentImage,height);
+        //pan.printPan();
+        System.out.println(pan.objects.size());
     }
 
     public void LoadVideo(File gifFolder) {
