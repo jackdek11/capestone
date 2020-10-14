@@ -25,6 +25,8 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTable;
 import javax.swing.JRadioButton;
+import javax.swing.JOptionPane;
+import javax.swing.JDialog;
 
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -46,7 +48,7 @@ public class GUI{
     private JTextField outFolder, inFolder;
     private Driver pro;
     // private JLabel numberOfFramesDetected, numberOfObjectsDetected, numberOfDisksDetected, numberDisksInRed, numberDisksInGreen, numberDisksInBlue;
-    private static JPanel panelOutputLabels, panelFrames, outputPanel;
+    private static JPanel panel, panelOutputLabels, panelFrames, outputPanel;
     private static GUI gui;
     private JLabel processingGif;
     private String[][] col;
@@ -59,7 +61,7 @@ public class GUI{
     public GUI(){
         JFrame frame = new JFrame();
         frame.setResizable(false);
-        JPanel panel = new JPanel();
+        panel = new JPanel();
 
         // panel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         // panel.setLayout(new GridLayout(1, 2));
@@ -146,6 +148,7 @@ public class GUI{
         JPanel outFolPanel = new JPanel();
 
         outFolder = new JTextField("none",22);
+        outFolder.setEditable(false);
         // inFolder.setMinimumSize(new Dimension(300,200));
         // inFolder.setBounds(0,0, 200,30);
 
@@ -289,8 +292,9 @@ public class GUI{
 
         readyButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                if((inFolder.getText()).equals("none")){
-                    System.out.println("Input folder has not been selected. Please select one by clicking the search button and choosing folder in dialog.");
+                if((inFolder.getText()).equals("none") || (outFolder.getText()).equals("none")){
+                    // System.out.println("Input folder has not been selected. Please select one by clicking the search button and choosing folder in dialog.");
+                    JOptionPane.showMessageDialog(panel, "Valid input and/or output folders have not been selected.", "Invalid Input and Output Folders", JOptionPane.ERROR_MESSAGE);
                 }
                 else{
                     readyButton.setEnabled(false);
