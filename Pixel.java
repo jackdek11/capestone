@@ -2,9 +2,11 @@ public class Pixel {
 
     private int R,G,B,x,y;
     public boolean owned;
+    public int index;
 
     public Pixel(int R, int G, int B,int x,int y ){
         owned = false;
+        index=-1;
         this.R=R;
         this.G=G;
         this.B=B;
@@ -50,7 +52,6 @@ public class Pixel {
         return false;
     }
     public String printPixel(){
-        return (""+R);
+        return (""+R%9);
     }
 }
-
