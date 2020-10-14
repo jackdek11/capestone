@@ -51,6 +51,7 @@ public class GUI{
     private int index;
     private Category[] catArray;
     private String categoryCheck;
+    private ArrayList<String> categoryOrder;
 
     public GUI(){
         JFrame frame = new JFrame();
@@ -200,7 +201,9 @@ public class GUI{
     	radioRed.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e) {
     			if (Integer.parseInt(minRed.getText()) <= Integer.parseInt(maxRed.getText())) {
-    				categoryCheck = "red";}
+    				categoryCheck = "red";
+                    categoryOrder.add(categoryCheck);
+                }
     		}	
     	});        
     	
@@ -223,6 +226,7 @@ public class GUI{
                         (Integer.parseInt(minBlue.getText()) > Integer.parseInt(maxRed.getText())) ||
     					(Integer.parseInt(minBlue.getText())) < (Integer.parseInt(minRed.getText())))
     								categoryCheck = "blue";
+                                    categoryOrder.add(categoryCheck);
     			}
     		}
     		
@@ -252,6 +256,7 @@ public class GUI{
     					((Integer.parseInt(maxGreen.getText()) < Integer.parseInt(minBlue.getText())) &&
     					(Integer.parseInt(maxGreen.getText()) < Integer.parseInt(maxGreen.getText())))){
     						categoryCheck = "green";
+                            categoryOrder.add(categoryCheck);
     				}
     				
     			}
