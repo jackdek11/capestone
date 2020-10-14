@@ -50,6 +50,7 @@ public class GUI{
     private DefaultTableModel tableModel;
     private int index;
     private Category[] catArray;
+    private String categoryCheck;
 
     public GUI(){
         JFrame frame = new JFrame();
@@ -196,6 +197,12 @@ public class GUI{
     	redCategory.add(minRed);
     	JTextField maxRed = new JTextField("Maximum");
     	redCategory.add(maxRed);
+    	radioRed.addActionListener(new ActionListener(){
+    		public void actionPerformed(ActionEvent e) {
+    			if (Integer.parseInt(minRed.getText()) <= Integer.parseInt(maxRed.getText())) {
+    				categoryCheck = "red";}
+    		}	
+    	});        
     	
     	JPanel blueCategory = new JPanel();
     	panelCategories.add(blueCategory);
@@ -209,6 +216,17 @@ public class GUI{
     	blueCategory.add(minBlue);
     	JTextField maxBlue = new JTextField("Maximum");
     	blueCategory.add(maxBlue);
+    	radioBlue.addActionListener(new ActionListener(){
+    		public void actionPerformed(ActionEvent e ) {
+    			if (Integer.parseInt(maxBlue.getText()) >= Integer.parseInt(minBlue.getText())) {
+    				if ((Integer.parseInt(minBlue.getText()) > Integer.parseInt(minRed.getText())) && 
+                        (Integer.parseInt(minBlue.getText()) > Integer.parseInt(maxRed.getText())) ||
+    					(Integer.parseInt(minBlue.getText())) < (Integer.parseInt(minRed.getText())))
+    								categoryCheck = "blue";
+    			}
+    		}
+    		
+    	});        
     	
     	JPanel greenCategory = new JPanel();
     	panelCategories.add(greenCategory);
@@ -222,7 +240,25 @@ public class GUI{
     	greenCategory.add(minGreen);
     	JTextField maxGreen = new JTextField("Maximum");
     	greenCategory.add(maxGreen);
-
+    	radioGreen.addActionListener(new ActionListener(){
+    		public void actionPerformed(ActionEvent e) {
+    			if (Integer.parseInt(maxGreen.getText()) >= Integer.parseInt(minGreen.getText())){
+    				if (((Integer.parseInt(minGreen.getText()) > Integer.parseInt(minBlue.getText())) && 
+    					(Integer.parseInt(minGreen.getText()) > Integer.parseInt(minRed.getText())) &&
+    					(Integer.parseInt(minGreen.getText()) > Integer.parseInt(maxBlue.getText())) &&
+    					(Integer.parseInt(minGreen.getText()) > Integer.parseInt(maxRed.getText()))) ||
+    					((Integer.parseInt(maxGreen.getText()) < Integer.parseInt(minBlue.getText())) &&
+    					(Integer.parseInt(minGreen.getText()) > Integer.parseInt(maxRed.getText()))) ||
+    					((Integer.parseInt(maxGreen.getText()) < Integer.parseInt(minBlue.getText())) &&
+    					(Integer.parseInt(maxGreen.getText()) < Integer.parseInt(maxGreen.getText())))){
+    						categoryCheck = "green";
+    				}
+    				
+    			}
+    			
+    		}
+    		
+    	});
         return panelCategories;
     }
     
