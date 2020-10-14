@@ -1,9 +1,6 @@
-public class Circle extends Object{
+public class Circle{
     public int radius;
-
-    public Circle(){
-        super();
-    }
+    public ArrayList<Pixel> pixels;
     
     public Circle(ArrayList<Pixel> pixels) {
 		 this.pixels = pixels;
