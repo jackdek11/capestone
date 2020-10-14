@@ -31,8 +31,11 @@ import javax.imageio.ImageIO;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit; //used for testing
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class GUI{
-    Color customGrey1 = new Color(73,73,73); //lightest custom grey
+    Color customGrey1 = new Color(103,103,103); //lightest custom grey
     Color customGrey2 = new Color(53,53,53);
     Color customGrey3 = new Color(43,43,43);
     Color customGrey4 = new Color(33,33,33); //darkest custom grey
@@ -254,21 +257,7 @@ public class GUI{
                     //code that adds to catArray.
                     
                     pro = new Driver(inputFolder, outputFolder,catArray, gui);
-
-                    // Image img = Toolkit.getDefaultToolkit().createImage("giphyNew.gif"); //unsure why icon not shown before pro.start()
-                    // ImageIcon imageI = new ImageIcon(img);
-                    // processingGif.setIcon(imageI);
-
                     pro.start();
-
-                    // try{
-                    // BufferedImage proGif = ImageIO.read(new File("giphy.gif"));
-                    // panelFrames.repaint();
-                    // }
-                    // catch(IOException u){
-                    //     u.printStackTrace();
-                    // }
-
                     try{
                         pro.join();
                     }
@@ -323,12 +312,37 @@ public class GUI{
         return panelFrames;
     }
     
+    // public Image findImageInOutputFolder(File[] arrayOfFrames, int number){
+    //     for (File f: arrayOfFrames){
+    //         String name = arrayOfFrames[number].getName();
+    //         if (name.substring(name.length()-14).equals("_processed.gif"));
+    //             Image img = Toolkit.getDefaultToolkit().createImage(outputFolder + "\\" + arrayOfFrames[number].getName());
+    //             return img;
+    //         }
+    //     }
+    //     return null;
+    // }
+
+    public ArrayList<File> createArrayofProcessedFrames(File[] arrayOfFrames){
+        ArrayList<File> foundProcessedFrames = new ArrayList<File>();
+        for (File f: arrayOfFrames){
+            String name = f.getName();
+            if (name.substring(name.length()-14).equals("_processed.gif")){
+                foundProcessedFrames.add(f);
+            }
+        }
+        return foundProcessedFrames;
+    }
+    
     public void createProcessedFrames(){
         File folder = new File(outputFolder);
         System.out.println("apfijpfj");
         if (folder.isDirectory()){
-            System.out.println("Whaa");
-            File[] listOfProcessedFrames = folder.listFiles();
+            File[] a = folder.listFiles();
+            ArrayList<File> listOfProcessedFrames = new ArrayList<File>(Arrays.asList(a));
+            // File[] intialListOfProcessedFrames = folder.listFiles();
+            // ArrayList<File> listOfProcessedFrames = createArrayofProcessedFrames(intialListOfProcessedFrames);
+            // System.out.println(listOfProcessedFrames.length);
             panelFrames.remove(processingGif);
 
             JPanel theFrames = new JPanel();
@@ -336,11 +350,28 @@ public class GUI{
             theFrames.setPreferredSize(new Dimension(920,400));
             theFrames.setMaximumSize(new Dimension(920,450));
             theFrames.setBackground(customGrey3);
+            JLabel displayedProcessedGifName = new JLabel();
             JLabel displayProcessedGif = new JLabel();
-            Image img = Toolkit.getDefaultToolkit().createImage(outputFolder + "\\" + listOfProcessedFrames[0].getName());
+            index = 0;
+            Image img = Toolkit.getDefaultToolkit().createImage(outputFolder + "\\" + (listOfProcessedFrames.get(index)).getName());
+
+// Section to be removed
+            // Image img = null;
+            // for (File f: listOfProcessedFrames){
+            //    String name = listOfProcessedFrames[index].getName();
+            //    if (name.substring(name.length()-14).equals("_processed.gif"));
+            //       img = Toolkit.getDefaultToolkit().createImage(outputFolder + "\\" + listOfProcessedFrames[0].getName());
+            //       break;
+            //    }
+            // }
+            // Image img = findImageInOutputFolder(listOfProcessedFrames, index); //should not return null
+
             ImageIcon iconToDisplay = new ImageIcon(img);
             displayProcessedGif.setIcon(iconToDisplay);
+            displayedProcessedGifName.setText((listOfProcessedFrames.get(index)).getName());
+            displayedProcessedGifName.setForeground(customGrey1);
             theFrames.add(displayProcessedGif, BorderLayout.CENTER);
+            theFrames.add(displayedProcessedGifName, BorderLayout.NORTH);
             displayProcessedGif.setHorizontalAlignment(JLabel.CENTER);
             displayProcessedGif.setVerticalAlignment(JLabel.CENTER);
 
@@ -348,36 +379,56 @@ public class GUI{
             theButtons.setBackground(customGrey3);
             JButton previous = new JButton("Previous");
             theButtons.add(previous);
-            index = 0;
+            JButton next = new JButton("Next");
+            theButtons.add(next);
+            
             if ((index - 1)<= -1){
                 previous.setEnabled(false);
             }
+
             previous.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
-                    if ((listOfProcessedFrames.length - 1)<= -1){
-                        previous.setEnabled(false);
+                    if (index > 0){
+                       index--;
+                       if ((index + 1) < listOfProcessedFrames.size()){
+                           next.setEnabled(true);
+                       }
+                       if ((index - 1)<= -1){
+                           previous.setEnabled(false);
+                       }
+                       // Image imgPrev = findImageInOutputFolder(listOfProcessedFrames, index);
+                       Image imgPrev = Toolkit.getDefaultToolkit().createImage(outputFolder + "\\" + (listOfProcessedFrames.get(index)).getName());
+                       ImageIcon prevIconToDisplay = new ImageIcon(imgPrev);
+                       displayProcessedGif.setIcon(prevIconToDisplay);
+                       displayedProcessedGifName.setText((listOfProcessedFrames.get(index)).getName());
                     }
-                    Image imgPrev = Toolkit.getDefaultToolkit().createImage(listOfProcessedFrames[index-1].getName());
-                    ImageIcon prevIconToDisplay = new ImageIcon(imgPrev);
-                    displayProcessedGif.setIcon(prevIconToDisplay);
                 }
             });
 
-            JButton next = new JButton("Next");
-            theButtons.add(next);
-            if ((index + 1)>= listOfProcessedFrames.length){
+            
+            if ((index + 1)>= listOfProcessedFrames.size()){
                 next.setEnabled(false);
             }
+
             next.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e){
-                    if ((listOfProcessedFrames.length + 1)>= listOfProcessedFrames.length){
-                        next.setEnabled(false);
+                    if (index<(listOfProcessedFrames.size()-1)){
+                        index++;
+                        if ((index + 1)>= (listOfProcessedFrames.size())){
+                            next.setEnabled(false);
+                        }
+                        if ((index - 1)> -1){
+                            previous.setEnabled(true);
+                        }
+                        // Image imgNext = findImageInOutputFolder(listOfProcessedFrames, index);
+                        Image imgNext = Toolkit.getDefaultToolkit().createImage(outputFolder + "\\" + (listOfProcessedFrames.get(index)).getName());
+                        ImageIcon nextIconToDisplay = new ImageIcon(imgNext);
+                        displayProcessedGif.setIcon(nextIconToDisplay);
+                        displayedProcessedGifName.setText((listOfProcessedFrames.get(index)).getName());
                     }
-                    Image imgNext = Toolkit.getDefaultToolkit().createImage(listOfProcessedFrames[index+1].getName());
-                    ImageIcon nextIconToDisplay = new ImageIcon(imgNext);
-                    displayProcessedGif.setIcon(nextIconToDisplay);
                 }
             });
+            
             panelFrames.add(theFrames, BorderLayout.CENTER);
             panelFrames.add(theButtons, BorderLayout.SOUTH);
             panelFrames.revalidate();

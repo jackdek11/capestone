@@ -11,7 +11,7 @@ public class Driver extends Thread{
     private static ArrayList<ArrayList<Pixel>> currentImage;
     private static File gif;
     private static FirstFrame firstF;
-    private static Frame tempFrame;
+    private static Frame tempFrame, tempFrame2;
     private static int width, height, numOfFrames;
     private static boolean foundFirst;
     private static File gifFrames;
@@ -28,9 +28,9 @@ public class Driver extends Thread{
     }
 
     public static void proofOfConcept(){
-        Panarama pan = new Panarama(currentImage,height);
+        // Panarama pan = new Panarama(currentImage,height);
         //pan.printPan();
-        System.out.println(pan.objects.size());
+        // System.out.println(pan.objects.size());
     }
 
     public void LoadVideo(File gifFolder) {
@@ -40,7 +40,7 @@ public class Driver extends Thread{
         foundFirst = false;
         for (File g: gif) {
             String pathOfGifFile = gifFolder.getName() + "/" + g.getName();
-            //System.out.println(pathOfGifFile);
+            System.out.println(g.getName());
             if(checkFile(g)) { //check file will check if file is a gif or not
                 if (!foundFirst) {
                     firstF = new FirstFrame(pathOfGifFile,arrayOfCategories,gui); //need to parse category array as well
@@ -70,9 +70,11 @@ public class Driver extends Thread{
     public static boolean checkFile(File f){
         boolean okay = false;
         if(checkFileFormat(f)) {
-            Frame tempFrame = new Frame(outFolder+ "/" +f.getName());
+            tempFrame2 = new Frame("Dir6/"+f.getName());
+            // Frame tempFrame = new Frame(outFolder+ "\\" +f.getName());
             if(foundFirst){
-                if(checkSize(tempFrame)) {
+               System.out.println(tempFrame2.getWidth());
+                if(checkSize(tempFrame2)) {
                     okay = true;
                 }
             }
@@ -95,10 +97,12 @@ public class Driver extends Thread{
     public static boolean checkSize(Frame file) {
         boolean widthFine = false;
         boolean heightFine = false;
-        if (widthOkay(file.getWidth())) {
+        int tempWidth = file.getWidth();
+        if (widthOkay(tempWidth)) {
             widthFine = true;
         }
-        if (heightOkay(file.getHeight())) {
+        int tempHeight = file.getHeight();
+        if (heightOkay(tempHeight)) {
             heightFine = true;
         }
         return widthFine && heightFine;

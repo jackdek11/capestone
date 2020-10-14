@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Circle{
     public int radius;
     public ArrayList<Pixel> pixels;
@@ -20,16 +22,16 @@ public class Circle{
         }
     }
 
-    public void getColour(){
-        radius=longestPixelChain/2;
-        if(radius<4){
-            changeColour(0);
-        }
-        else if(4<=radius&&radius<8){
-            changeColour(1);
-        }
-        else if(8<=radius){
-            changeColour(2);
-        }
-    }
+ //    public void getColour(){
+//         radius=longestPixelChain/2;
+//         if(radius<4){
+//             changeColour(0);
+//         }
+//         else if(4<=radius&&radius<8){
+//             changeColour(1);
+//         }
+//         else if(8<=radius){
+//             changeColour(2);
+//         }
+//     }
 }
