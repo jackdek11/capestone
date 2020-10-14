@@ -61,6 +61,11 @@ public class Object {
         CirclePerimeterWithGivenRadius = (2*Math.PI*radius);
         return CirclePerimeterWithGivenRadius;
     }
+    
+    public Circle circlefy(){
+        Circle toCircle = new Circle(pixels);
+        return toCircle
+    }
 
 
     public boolean checkCircle(){
