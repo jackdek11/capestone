@@ -18,6 +18,7 @@ public class Frame extends Component {
     public ArrayList<Object> objects;
     private Category[] categoryArray;
     private GUI gui;
+    private String filename;
 
     public void printPan(int index){
         for (int i =0; i < height; i++) {
@@ -58,7 +59,7 @@ public class Frame extends Component {
         }
     }
     
-    public void createProcessedFrame(){ 
+    public void createProcessedFrame(String outputFolder){ 
          for(int i = 0; i < width; i++){
              for(int k = 0; k < height; k++){
                  for(Circle cir : circles){
@@ -81,6 +82,7 @@ public class Frame extends Component {
 
     public Frame(String filename, Category[] catArray, GUI gui){
         try {
+            this.filename = filename;
             categoryArray = catArray;
             this.gui = gui;
             image =
