@@ -43,6 +43,7 @@ public class Driver extends Thread{
                 if (!foundFirst) {
                     firstF = new FirstFrame(pathOfGifFile,arrayOfCategories,gui); //need to parse category array as well
                     currentImage= firstF.getPixelArray();
+                    firstF.createProcessedFrame();
                     frames.add(firstF);
                     firstF.setIndex(0);
                     width = firstF.getWidth();
@@ -56,12 +57,15 @@ public class Driver extends Thread{
                     firstF.setIndex(numOfFrames);
                     numObjects+=firstF.getNumberOfObjects();
                     numCircles+=firstF.getNumberOfCircles();
+                    firstF.createProcessedFrame();
+                    frames.add(firstF);
                 }
                 else {
                     tempFrame=new Frame(pathOfGifFile);
                     tempFrame.setPixelArray(currentImage);
                     tempFrame.marchForwardThroughBuffer();
                     currentImage = tempFrame.getPixelArray();
+                    tempFrame.createProcessedFrame();
                     frames.add(tempFrame); //need to parse category array as well
                 }
                 numOfFrames++;
