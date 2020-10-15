@@ -15,6 +15,7 @@ public class FirstFrame extends Frame {
      * consecutive pixels above the threshold of 50
      * */
 
+    public int stepRef,index;
     public ArrayList<ArrayList<Pixel>> ObjectLines ;
 
     /**
@@ -25,7 +26,9 @@ public class FirstFrame extends Frame {
 
     public FirstFrame(String filename, Category[] catArray, GUI gui){
         super(filename, catArray, gui);
+        index=0;
         marchThroughImage(image);
+        stepRef=width;
         ObjectLines = new ArrayList<ArrayList<Pixel>>() ;
         readLines();
     }
@@ -38,22 +41,26 @@ public class FirstFrame extends Frame {
      * */
 
     public void readLines(){
+        int temp=0;
         for(int i=0;i<height;i++){
-            buildLines(pixelArray.get(i)) ;
+            temp=Math.max(temp,buildLines(pixelArray.get(i)));
         }
+        stepRef=temp;
         mergeLines() ;
         getObjects();
     }
 
+    public void setIndex(int index){
+        this.index=index;
+    }
+
     public void getObjects(){
-        System.out.println("Number of objects: "+objects.size());
         for (int i=0;i<objects.size();i++){
             if(objects.get(i).checkCircle()){
                 Circle tempCircle=objects.get(i).circlefy();
                 circles.add(tempCircle);
             }
         }
-        System.out.println("Number of circles: "+circles.size());
     }
 
     /**
@@ -87,12 +94,17 @@ public class FirstFrame extends Frame {
      * ended
      * */
 
-    public void buildLines(ArrayList<Pixel> pixels){
+    public int buildLines(ArrayList<Pixel> pixels){
         ArrayList<Pixel> newLine = new ArrayList<Pixel>() ;
+        int tempOffset=0;
         for (int i=0;i<width;i++){
             if(pixels.get(i).aboveThreshold(120)){
                 newLine.add(pixels.get(i)) ;
-                if((i==(width-1))||(!pixels.get(i+1).aboveThreshold(120))){
+                if(i==width-1){
+                    tempOffset=Math.max(tempOffset,newLine.size());
+                    newLine=new ArrayList<Pixel>();
+                }
+                else if(!pixels.get(i+1).aboveThreshold(120)){
                     if(!newLine.isEmpty()){
                         ObjectLines.add(newLine) ;
                         newLine = new ArrayList<Pixel>() ;
@@ -100,5 +112,18 @@ public class FirstFrame extends Frame {
                 }
             }
         }
+        return tempOffset;
+    }
+
+    public int getNumberOfObjects(){
+        return objects.size();
+    }
+
+    public int getNumberOfCircles(){
+        return circles.size();
+    }
+
+    public int getStepRef(){
+        return width+index-stepRef;
     }
 }
