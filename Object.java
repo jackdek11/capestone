@@ -45,7 +45,7 @@ public class Object {
         return false;
     }
 
-    public double isCircle(){
+    public double isCircle(){ //change to getRadius
         double radius = getLongestPixelChain()/2;
         return radius;
     }
@@ -64,6 +64,7 @@ public class Object {
 
     public Circle circlefy(){
         Circle toCircle = new Circle(pixels);
+        toCircle.setLongestPixelChain(longestPixelChain);
         return toCircle;
     }
 
