@@ -57,6 +57,27 @@ public class Frame extends Component {
             setPixelARGB(pixel,pixelArray.get(i),i,width-1);
         }
     }
+    
+    public void createProcessedFrame(){ 
+         for(int i = 0; i < width; i++){
+             for(int k = 0; k < height; k++){
+                 for(Circle cir : circles){
+                     int colorOfCat = cir.getCategoryColor(); // make method that gets for example Color.green.getRGB() for green cat circle
+                     for(Pixel p : cir.pixels){
+                         image.setRGB(k,i, colorOfCat);
+                     }
+                 }
+             }
+         }
+ 
+         try{
+             File processedFrame = new File(outputFolder + filename.substring(0, (filename.length()-4)) + "_processed.gif");
+             ImageIO.write(image,".gif", processedFrame);
+        }
+        catch(IOException e){
+            e.printStackTrace();
+        }
+    }
 
     public Frame(String filename, Category[] catArray, GUI gui){
         try {
