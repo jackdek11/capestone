@@ -279,10 +279,41 @@ public class GUI{
     	blueCategory.add(radioBlue);
     	blueCategory.add(minBlue);
     	blueCategory.add(maxBlue);
-    	radioBlue.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent e ) {
-    			minBlue.setEnabled(true);
-    			maxBlue.setEnabled(true);
+    	
+    	radioBlue.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent event) {
+                int clicked = event.getStateChange();
+                if (clicked == ItemEvent.SELECTED) {
+                    minBlue.setEnabled(true);
+                }	
+                //add else to remove 
+            }
+    	});
+        
+        minBlue.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+    
+            }
+            public void removeUpdate(DocumentEvent e) {
+ 
+            }
+            public void insertUpdate(DocumentEvent e) {
+                  minBlue.setEnabled(false);
+            maxBlue.setEnabled(true);
+            }
+            
+        });
+        
+        maxBlue.getDocument().addDocumentListener(new DocumentListener() {
+          public void changedUpdate(DocumentEvent e) {
+    
+            }
+            public void removeUpdate(DocumentEvent e) {
+ 
+            }
+          
+          public void insertUpdate(DocumentEvent e) {
+            maxBlue.setEnabled(false);
     			radioGreen.setEnabled(true);
     			if (Integer.parseInt(maxBlue.getText()) >= Integer.parseInt(minBlue.getText())) {
     				if ((Integer.parseInt(minBlue.getText()) > Integer.parseInt(minRed.getText())) && 
@@ -291,9 +322,11 @@ public class GUI{
     								categoryCheck = "blue";
     								//categoryOrder.add(categoryCheck);
     			}
-    		}
-    		
-    	});
+                else{
+                    JOptionPane.showMessageDialog(panel, "Min and max not okay", "fahoihfnaolif", JOptionPane.ERROR_MESSAGE);
+                }
+          }
+        });
     	
     	JPanel greenCategory = new JPanel();
     	panelCategories.add(greenCategory);
@@ -304,28 +337,62 @@ public class GUI{
     	greenCategory.add(radioGreen);
     	greenCategory.add(minGreen);
     	greenCategory.add(maxGreen);
-    	radioGreen.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent e) {
-    			minGreen.setEnabled(true);
-    			maxGreen.setEnabled(true);
-    			if (Integer.parseInt(maxGreen.getText()) >= Integer.parseInt(minGreen.getText())){
-    				if (((Integer.parseInt(minGreen.getText()) > Integer.parseInt(minBlue.getText())) && 
-    					(Integer.parseInt(minGreen.getText()) > Integer.parseInt(minRed.getText())) &&
-    					(Integer.parseInt(minGreen.getText()) > Integer.parseInt(maxBlue.getText())) &&
-    					(Integer.parseInt(minGreen.getText()) > Integer.parseInt(maxRed.getText()))) ||
-    					((Integer.parseInt(maxGreen.getText()) < Integer.parseInt(minBlue.getText())) &&
-    					(Integer.parseInt(minGreen.getText()) > Integer.parseInt(maxRed.getText()))) ||
-    					((Integer.parseInt(maxGreen.getText()) < Integer.parseInt(minBlue.getText())) &&
-    					(Integer.parseInt(maxGreen.getText()) < Integer.parseInt(maxGreen.getText())))){
-    						categoryCheck = "green";
-    						//categoryOrder.add(categoryCheck);
-    				}
-    				
-    			}
-    			
-    		}
-    		
+    	
+    	radioGreen.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent event) {
+                int clicked = event.getStateChange();
+                if (clicked == ItemEvent.SELECTED) {
+                    minGreen.setEnabled(true);
+                }	
+                //add else to remove 
+            }
     	});
+        
+        minGreen.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+    
+            }
+            public void removeUpdate(DocumentEvent e) {
+ 
+            }
+            public void insertUpdate(DocumentEvent e) {
+                  minGreen.setEnabled(false);
+            maxGreen.setEnabled(true);
+            }
+            
+        });
+        
+        maxGreen.getDocument().addDocumentListener(new DocumentListener() {
+          public void changedUpdate(DocumentEvent e) {
+    
+            }
+            public void removeUpdate(DocumentEvent e) {
+ 
+            }
+          
+          public void insertUpdate(DocumentEvent e) {
+            maxGreen.setEnabled(false);
+    			//radioGreen.setEnabled(true);
+				if (Integer.parseInt(maxGreen.getText()) >= Integer.parseInt(minGreen.getText())){
+					if (((Integer.parseInt(minGreen.getText()) > Integer.parseInt(minBlue.getText())) && 
+							(Integer.parseInt(minGreen.getText()) > Integer.parseInt(minRed.getText())) &&
+							(Integer.parseInt(minGreen.getText()) > Integer.parseInt(maxBlue.getText())) &&
+							(Integer.parseInt(minGreen.getText()) > Integer.parseInt(maxRed.getText()))) ||
+							((Integer.parseInt(maxGreen.getText()) < Integer.parseInt(minBlue.getText())) &&
+							(Integer.parseInt(minGreen.getText()) > Integer.parseInt(maxRed.getText()))) ||
+							((Integer.parseInt(maxGreen.getText()) < Integer.parseInt(minBlue.getText())) &&
+							(Integer.parseInt(maxGreen.getText()) < Integer.parseInt(maxGreen.getText())))){
+								categoryCheck = "green";
+						//categoryOrder.add(categoryCheck);
+					}
+				
+				}	
+    			
+                else{
+                    JOptionPane.showMessageDialog(panel, "Min and max not okay", "fahoihfnaolif", JOptionPane.ERROR_MESSAGE);
+                }
+          }
+        }); 
         return panelCategories;
     }
     
