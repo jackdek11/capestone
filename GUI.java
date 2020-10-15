@@ -36,6 +36,10 @@ import java.util.concurrent.TimeUnit; //used for testing
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.event.*;
+import javax.swing.text.*;
+import java.awt.event.*;
+
 public class GUI{
     Color customGrey1 = new Color(103,103,103); //lightest custom grey
     Color customGrey2 = new Color(53,53,53);
@@ -232,11 +236,28 @@ public class GUI{
     	});
         
         minRed.getDocument().addDocumentListener(new DocumentListener() {
-            minRed.setEnabled(false);
+            public void changedUpdate(DocumentEvent e) {
+    
+            }
+            public void removeUpdate(DocumentEvent e) {
+ 
+            }
+            public void insertUpdate(DocumentEvent e) {
+                  minRed.setEnabled(false);
             maxRed.setEnabled(true);
+            }
+            
         });
         
         maxRed.getDocument().addDocumentListener(new DocumentListener() {
+          public void changedUpdate(DocumentEvent e) {
+    
+            }
+            public void removeUpdate(DocumentEvent e) {
+ 
+            }
+          
+          public void insertUpdate(DocumentEvent e) {
             maxRed.setEnabled(false);
     			radioBlue.setEnabled(true);
     			if (Integer.parseInt(minRed.getText()) <= Integer.parseInt(maxRed.getText())) {
@@ -246,6 +267,7 @@ public class GUI{
                 else{
                     JOptionPane.showMessageDialog(panel, "Min and max not okay", "fahoihfnaolif", JOptionPane.ERROR_MESSAGE);
                 }
+          }
         });
             
     	JPanel blueCategory = new JPanel();
@@ -304,7 +326,6 @@ public class GUI{
     		}
     		
     	});
-        return panelCategories;
         return panelCategories;
     }
     

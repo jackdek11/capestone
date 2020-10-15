@@ -22,8 +22,8 @@ public class Circle{
         }
     }
 
- //    public void getColour(){
-//         radius=longestPixelChain/2;
+    public void getCategoryColor(){
+        // radius=longestPixelChain/2;
 //         if(radius<4){
 //             changeColour(0);
 //         }
@@ -33,5 +33,7 @@ public class Circle{
 //         else if(8<=radius){
 //             changeColour(2);
 //         }
-//     }
+    }
+      public void setColor(){
+      }
 }
