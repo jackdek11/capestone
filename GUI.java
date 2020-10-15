@@ -58,9 +58,9 @@ public class GUI{
     private String[][] col;
     private DefaultTableModel tableModel;
     private int index;
-    private Category[] catArray;
+    private Category[] catArray = ;
     private String categoryCheck;
-    private ArrayList<String> categoriesUsed;
+    private ArrayList<String> categoriesUsed = new ArrayList<String>();
 
     public GUI(){
         JFrame frame = new JFrame();
