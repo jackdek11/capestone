@@ -262,7 +262,7 @@ public class GUI{
     			radioBlue.setEnabled(true);
     			if (Integer.parseInt(minRed.getText()) <= Integer.parseInt(maxRed.getText())) {
     				categoryCheck = "red";
-    				categogiesUsed.add(categoryCheck);
+    				categoriesUsed.add(categoryCheck);
     			}
                 else{
                     JOptionPane.showMessageDialog(panel, "Min and max not okay", "fahoihfnaolif", JOptionPane.ERROR_MESSAGE);
