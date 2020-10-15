@@ -1,22 +1,19 @@
-/**
-        *@author Jack de Kock
-        *@version 29th August 2020
-        *Frame object which extends Component and builds the checks the last pixels for new object pixels
-        */
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class Frame extends Component {
-
+    /**
+     *@author Jack de Kock
+     *@version 29th August 2020
+     *Frame object which extends Component and builds the checks the last pixels for new object pixels
+     */
     public ArrayList<ArrayList<Pixel>> ObjectLines;
     public int width,height;
     public BufferedImage image;
-    public LinkedList<Circle> circles;
+    public ArrayList<Circle> circles;
     public ArrayList<ArrayList<Pixel>> pixelArray;
     public ArrayList<Object> objects;
     private Category[] categoryArray;
@@ -71,6 +68,7 @@ public class Frame extends Component {
             height = image.getHeight();
             pixelArray = new ArrayList<ArrayList<Pixel>>();
             objects = new ArrayList<Object>();
+            circles=new ArrayList<Circle>();
             ObjectLines = new ArrayList<ArrayList<Pixel>>() ;
         } catch (IOException e) {
             System.err.println(e.getMessage());
