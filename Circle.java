@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.awt.image.BufferedImage;
+import java.awt.*;
 
 public class Circle{
     public int radius;
