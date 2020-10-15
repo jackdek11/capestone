@@ -220,18 +220,30 @@ public class GUI{
     	redCategory.add(radioRed);
     	redCategory.add(minRed);
     	redCategory.add(maxRed);
+        
     	radioRed.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e) {
     			minRed.setEnabled(true);
-    			maxRed.setEnabled(true);
+    		}	
+    	});
+        
+        minRed.getDocument().addDocumentListener(new DocumentListener() {
+            minRed.setEnabled(false);
+            maxRed.setEnabled(true);
+        });
+        
+        maxRed.getDocument().addDocumentListener(new DocumentListener() {
+            maxRed.setEnabled(false);
     			radioBlue.setEnabled(true);
     			if (Integer.parseInt(minRed.getText()) <= Integer.parseInt(maxRed.getText())) {
     				categoryCheck = "red";
     				//categoryOrder.add(categoryCheck);
     			}
-    		}	
-    	});
-    	
+                else{
+                    JOptionPane.showMessageDialog(panel, "Min and max not okay", "fahoihfnaolif", JOptionPane.ERROR_MESSAGE);
+                }
+        });
+            
     	JPanel blueCategory = new JPanel();
     	panelCategories.add(blueCategory);
     	blueCategory.setLayout(new GridLayout(3,1));
