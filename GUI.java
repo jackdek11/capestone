@@ -221,10 +221,14 @@ public class GUI{
     	redCategory.add(minRed);
     	redCategory.add(maxRed);
         
-    	radioRed.addActionListener(new ActionListener(){
-    		public void actionPerformed(ActionEvent e) {
-    			minRed.setEnabled(true);
-    		}	
+    	radioRed.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent event) {
+                int clicked = event.getStateChange();
+                if (clicked == ItemEvent.SELECTED) {
+                    minRed.setEnabled(true);
+                }	
+                //add else to remove 
+            }
     	});
         
         minRed.getDocument().addDocumentListener(new DocumentListener() {
