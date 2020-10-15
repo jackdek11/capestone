@@ -423,7 +423,18 @@ public class GUI{
                     readyButton.setEnabled(false);
                     
                     //code that adds to catArray.
-                    
+		    for (String c: categoriesUsed){
+			if (c.equals("red")){
+		    		catArray.add(new Category(c, Integer.parseInt(minRed.getText()), Integer.parseInt(maxRed.getText()));
+			} 
+			else if (c.equals("blue")){
+		    		catArray.add(new Category(c, Integer.parseInt(minBlue.getText()), Integer.parseInt(maxBlue.getText()));
+			}
+			else{
+		    		catArray.add(new Category(c, Integer.parseInt(minGreen.getText()), Integer.parseInt(minGreen.getText()));
+			}
+		    }
+					     
                     pro = new Driver(inputFolder, outputFolder,catArray, gui);
                     pro.start();
                     try{
