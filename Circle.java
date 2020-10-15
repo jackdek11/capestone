@@ -1,8 +1,10 @@
 import java.util.ArrayList;
+import java.awt.image.BufferedImage;
 
 public class Circle{
     public int radius;
     public ArrayList<Pixel> pixels;
+    private Color color;
     
     public Circle(ArrayList<Pixel> pixels) {
 		 this.pixels = pixels;
@@ -22,7 +24,10 @@ public class Circle{
         }
     }
 
-    public void getCategoryColor(){
+    public int getCategoryColor(){
+        return color.getRGB();
+    }
+
         // radius=longestPixelChain/2;
 //         if(radius<4){
 //             changeColour(0);
@@ -33,7 +38,20 @@ public class Circle{
 //         else if(8<=radius){
 //             changeColour(2);
 //         }
-    }
-      public void setColor(){
+    // }
+      public void setColor(Category[] cat){
+            for(Category c : cat){
+                if (c.getMin <= radius){
+                    if(c.getMax >= radius){
+                        color = c.getCategoryColor();
+                        return;
+                    }
+                }
+            }
+        color = Color.YELLOW; //circle does not fall into category
+      }
+
+      public void setLongestPixelChain(int longestPixelChain){
+            radius = longestPixelChain;
       }
 }
