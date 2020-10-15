@@ -1,17 +1,16 @@
 import java.io.File;
 import java.util.*;
-import java.awt.image.BufferedImage;
 import java.awt.Toolkit;
 import java.awt.Image;
 import javax.swing.ImageIcon;
-import javax.swing.text.html.HTMLDocument;
 
 public class Driver extends Thread{
     private static ArrayList<Frame> frames;
     private static ArrayList<ArrayList<Pixel>> currentImage;
     private static File gif;
     private static FirstFrame firstF;
-    private static Frame tempFrame, tempFrame2;
+    private int numObjects,numCircles;
+    private static Frame tempFrame;
     private static int width, height, numOfFrames;
     private static boolean foundFirst;
     private static File gifFrames;
@@ -22,15 +21,15 @@ public class Driver extends Thread{
     public Driver(String inputFolder, String outputFolder, Category[] catArray, GUI gui){
         inFolder=inputFolder;
         outFolder=outputFolder;
+        numCircles=0;
+        numObjects=0;
         this.gui=gui;
         gifFrames = new File(inputFolder);
         arrayOfCategories = catArray;
     }
 
     public static void proofOfConcept(){
-        // Panarama pan = new Panarama(currentImage,height);
-        //pan.printPan();
-        // System.out.println(pan.objects.size());
+        System.out.println(firstF.getStepRef());
     }
 
     public void LoadVideo(File gifFolder) {
@@ -40,15 +39,23 @@ public class Driver extends Thread{
         foundFirst = false;
         for (File g: gif) {
             String pathOfGifFile = gifFolder.getName() + "/" + g.getName();
-//             System.out.println(g.getName());
             if(checkFile(g)) { //check file will check if file is a gif or not
                 if (!foundFirst) {
                     firstF = new FirstFrame(pathOfGifFile,arrayOfCategories,gui); //need to parse category array as well
                     currentImage= firstF.getPixelArray();
                     frames.add(firstF);
+                    firstF.setIndex(0);
                     width = firstF.getWidth();
                     height = firstF.getHeight();
+                    numCircles=firstF.getNumberOfCircles();
+                    numObjects=firstF.getNumberOfObjects();
                     foundFirst = true;
+                }
+                else if(numOfFrames==firstF.getStepRef()){
+                    firstF=new FirstFrame(pathOfGifFile,arrayOfCategories,gui);
+                    firstF.setIndex(numOfFrames);
+                    numObjects+=firstF.getNumberOfObjects();
+                    numCircles+=firstF.getNumberOfCircles();
                 }
                 else {
                     tempFrame=new Frame(pathOfGifFile);
@@ -57,24 +64,25 @@ public class Driver extends Thread{
                     currentImage = tempFrame.getPixelArray();
                     frames.add(tempFrame); //need to parse category array as well
                 }
+                numOfFrames++;
             }
             else {
                 System.out.println("File "+ numOfFrames + " in " + gifFolder.getName()+ " is not a gif.");
             }
             gui.changeNumberOfFramesDetected(numOfFrames); //.dat file adds. need to move num of frame
-            numOfFrames++;
+            gui.changeNumberOfDisksDetected(numCircles);
+            gui.changeNumberOfObjectsDetected(numObjects);
+            //numOfFrames++;
         }
-        proofOfConcept();
+        //proofOfConcept();
     }
 
     public static boolean checkFile(File f){
         boolean okay = false;
         if(checkFileFormat(f)) {
-            tempFrame2 = new Frame("Dir6/"+f.getName());
-            // Frame tempFrame = new Frame(outFolder+ "\\" +f.getName());
+            Frame tempFrame = new Frame("Dir6/"+f.getName());
             if(foundFirst){
-               System.out.println(tempFrame2.getWidth());
-                if(checkSize(tempFrame2)) {
+                if(checkSize(tempFrame)) {
                     okay = true;
                 }
             }
@@ -97,12 +105,10 @@ public class Driver extends Thread{
     public static boolean checkSize(Frame file) {
         boolean widthFine = false;
         boolean heightFine = false;
-        int tempWidth = file.getWidth();
-        if (widthOkay(tempWidth)) {
+        if (widthOkay(file.getWidth())) {
             widthFine = true;
         }
-        int tempHeight = file.getHeight();
-        if (heightOkay(tempHeight)) {
+        if (heightOkay(file.getHeight())) {
             heightFine = true;
         }
         return widthFine && heightFine;
@@ -126,9 +132,9 @@ public class Driver extends Thread{
 
     public void run(){
         boolean working = true;
-//         Image img = Toolkit.getDefaultToolkit().createImage("giphyNew.gif");
-//         ImageIcon imageI = new ImageIcon(img);
-//         gui.changeIcon(imageI);
+        Image img = Toolkit.getDefaultToolkit().createImage("giphyNew.gif");
+        ImageIcon imageI = new ImageIcon(img);
+        gui.changeIcon(imageI);
         while(working) {
             frames = new ArrayList<Frame>();
             if(gifFrames.isDirectory()) {
