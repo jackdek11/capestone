@@ -191,67 +191,85 @@ public class GUI{
         panelCategories.setMaximumSize(new Dimension(335,470));
         panelCategories.setBackground(customGrey3);
     	
-        JPanel redCategory = new JPanel();
-    	//redCategory.setBackground(Color.red);
+    	JPanel redCategory = new JPanel();
+
+        JRadioButton radioRed = new JRadioButton("Red");
+        JRadioButton radioBlue = new JRadioButton("Blue");
+        radioBlue.setEnabled(false);
+        JRadioButton radioGreen = new JRadioButton("Green");
+        radioGreen.setEnabled(false);
+        
+        JTextField minRed = new JTextField("Minimum");
+        minRed.setEnabled(false);
+        JTextField maxRed = new JTextField("Maximum");
+        maxRed.setEnabled(false);
+        JTextField minBlue = new JTextField("Minimum");
+        minBlue.setEnabled(false);
+        JTextField maxBlue = new JTextField("Maximum");
+        maxBlue.setEnabled(false);
+        JTextField minGreen = new JTextField("Minimum");
+        minGreen.setEnabled(false);
+        JTextField maxGreen = new JTextField("Maximum");
+        maxGreen.setEnabled(false);
+        
     	panelCategories.add(redCategory);
     	redCategory.setLayout(new GridLayout(3,1));
         redCategory.setBackground(customGrey3); 
         redCategory.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-    	JRadioButton radioRed = new JRadioButton("Red");
     	radioRed.setBackground(Color.red);
     	redCategory.add(radioRed);
-    	JTextField minRed = new JTextField("Minimum");
     	redCategory.add(minRed);
-    	JTextField maxRed = new JTextField("Maximum");
     	redCategory.add(maxRed);
     	radioRed.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e) {
+    			minRed.setEnabled(true);
+    			maxRed.setEnabled(true);
+    			radioBlue.setEnabled(true);
     			if (Integer.parseInt(minRed.getText()) <= Integer.parseInt(maxRed.getText())) {
     				categoryCheck = "red";
-                    categoryOrder.add(categoryCheck);
-                }
+    				//categoryOrder.add(categoryCheck);
+    			}
     		}	
-    	});        
+    	});
     	
     	JPanel blueCategory = new JPanel();
     	panelCategories.add(blueCategory);
     	blueCategory.setLayout(new GridLayout(3,1));
         blueCategory.setBackground(customGrey3); 
         blueCategory.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-    	JRadioButton radioBlue = new JRadioButton("Blue");
     	radioBlue.setBackground(Color.blue);
     	blueCategory.add(radioBlue);
-    	JTextField minBlue = new JTextField("Minimum");
     	blueCategory.add(minBlue);
-    	JTextField maxBlue = new JTextField("Maximum");
     	blueCategory.add(maxBlue);
     	radioBlue.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e ) {
+    			minBlue.setEnabled(true);
+    			maxBlue.setEnabled(true);
+    			radioGreen.setEnabled(true);
     			if (Integer.parseInt(maxBlue.getText()) >= Integer.parseInt(minBlue.getText())) {
     				if ((Integer.parseInt(minBlue.getText()) > Integer.parseInt(minRed.getText())) && 
-                        (Integer.parseInt(minBlue.getText()) > Integer.parseInt(maxRed.getText())) ||
+    					(Integer.parseInt(minBlue.getText()) > Integer.parseInt(maxRed.getText())) ||
     					(Integer.parseInt(minBlue.getText())) < (Integer.parseInt(minRed.getText())))
     								categoryCheck = "blue";
-                                    categoryOrder.add(categoryCheck);
+    								//categoryOrder.add(categoryCheck);
     			}
     		}
     		
-    	});        
+    	});
     	
     	JPanel greenCategory = new JPanel();
     	panelCategories.add(greenCategory);
     	greenCategory.setLayout(new GridLayout(3,1));
         greenCategory.setBackground(customGrey3); 
         greenCategory.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-    	JRadioButton radioGreen = new JRadioButton("Green");
     	radioGreen.setBackground(Color.green);
     	greenCategory.add(radioGreen);
-    	JTextField minGreen = new JTextField("Minimum");
     	greenCategory.add(minGreen);
-    	JTextField maxGreen = new JTextField("Maximum");
     	greenCategory.add(maxGreen);
     	radioGreen.addActionListener(new ActionListener(){
     		public void actionPerformed(ActionEvent e) {
+    			minGreen.setEnabled(true);
+    			maxGreen.setEnabled(true);
     			if (Integer.parseInt(maxGreen.getText()) >= Integer.parseInt(minGreen.getText())){
     				if (((Integer.parseInt(minGreen.getText()) > Integer.parseInt(minBlue.getText())) && 
     					(Integer.parseInt(minGreen.getText()) > Integer.parseInt(minRed.getText())) &&
@@ -262,7 +280,7 @@ public class GUI{
     					((Integer.parseInt(maxGreen.getText()) < Integer.parseInt(minBlue.getText())) &&
     					(Integer.parseInt(maxGreen.getText()) < Integer.parseInt(maxGreen.getText())))){
     						categoryCheck = "green";
-                            categoryOrder.add(categoryCheck);
+    						//categoryOrder.add(categoryCheck);
     				}
     				
     			}
@@ -270,6 +288,7 @@ public class GUI{
     		}
     		
     	});
+        return panelCategories;
         return panelCategories;
     }
     
