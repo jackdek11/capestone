@@ -49,7 +49,7 @@ public class GUI{
     Color customOrange = new Color(210,103,6); //custom orange colour for ready and possibly cancel buttons
 
     private static String inputFolder, outputFolder;
-    private JTextField outFolder, inFolder;
+    private JTextField outFolder, inFolder, minRed, maxRed, minBlue, maxBlue, minGreen, maxGreen;
     private Driver pro;
     // private JLabel numberOfFramesDetected, numberOfObjectsDetected, numberOfDisksDetected, numberDisksInRed, numberDisksInGreen, numberDisksInBlue;
     private static JPanel panel, panelOutputLabels, panelFrames, outputPanel;
@@ -58,19 +58,21 @@ public class GUI{
     private String[][] col;
     private DefaultTableModel tableModel;
     private int index;
-    private Category[] catArray = ;
+    private ArrayList<Category> catArray = new ArrayList<Category>();
     private String categoryCheck;
     private ArrayList<String> categoriesUsed = new ArrayList<String>();
+
+    /**
+     * @serial GUI
+     * The constuctor of the class GUI. 
+     * Creates a JFrame, inner panel, side menu, and output panel.
+     * */
 
     public GUI(){
         JFrame frame = new JFrame();
         frame.setResizable(false);
         panel = new JPanel();
 
-        // panel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-        // panel.setLayout(new GridLayout(1, 2));
-        // panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        // panel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
 
         panel.setBackground(customGrey2);
@@ -93,9 +95,15 @@ public class GUI{
         frame.setVisible(true);
     }
 
+    /**
+     * @serial CreateMenu
+     * Creates side menu where user can select the input folder (i.e. folder where gifs are saved) 
+     * and output folder (i.e. where processed gifs will be saved to).  
+     * Creates panels for the folders and categories.
+     * */
+
     public void createMenu(JPanel menu){
         menu.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-        // menu.setBorder(BorderFactory.createLineBorder(Color.blue)); //outlines menu panel
         menu.setLayout(new BoxLayout(menu, BoxLayout.Y_AXIS));
         menu.setPreferredSize(new Dimension(350,700));
         menu.setMaximumSize(new Dimension(350,700));
@@ -108,6 +116,13 @@ public class GUI{
         JPanel panelButtons = createPanelButtons();
         menu.add(panelButtons);
     }
+
+    /**
+     * @serial createPanelFolders
+     * Creates panel with input label, output label, input textfield, output textfield, 
+     * input file chooser, and output file chooser. The file choosers are accessible via the "search" buttons
+     * @return JPanel panelFiles
+     * */
 
     public JPanel createPanelFolders(){ //change "files" to folders or directories
         JPanel panelFiles = new JPanel();
@@ -187,6 +202,13 @@ public class GUI{
         return panelFiles;
     }
 
+    /**
+     * @serial createPanelCategories
+     * Creates 3 panels for the red, blue, and green categories. 
+     * Each category's panel contains a radio button, minimum radius textfield, and maximum radius textfield
+     * @return JPanel panelCategories
+     * */
+
     public JPanel createPanelCategories(){
         JPanel panelCategories = new JPanel();
         panelCategories.setBorder(BorderFactory.createTitledBorder("Categories"));
@@ -203,17 +225,17 @@ public class GUI{
         JRadioButton radioGreen = new JRadioButton("Green");
         radioGreen.setEnabled(false);
         
-        JTextField minRed = new JTextField("Minimum");
+        minRed = new JTextField("Minimum");
         minRed.setEnabled(false);
-        JTextField maxRed = new JTextField("Maximum");
+        maxRed = new JTextField("Maximum");
         maxRed.setEnabled(false);
-        JTextField minBlue = new JTextField("Minimum");
+        minBlue = new JTextField("Minimum");
         minBlue.setEnabled(false);
-        JTextField maxBlue = new JTextField("Maximum");
+        maxBlue = new JTextField("Maximum");
         maxBlue.setEnabled(false);
-        JTextField minGreen = new JTextField("Minimum");
+        minGreen = new JTextField("Minimum");
         minGreen.setEnabled(false);
-        JTextField maxGreen = new JTextField("Maximum");
+        maxGreen = new JTextField("Maximum");
         maxGreen.setEnabled(false);
         
     	panelCategories.add(redCategory);
@@ -265,7 +287,7 @@ public class GUI{
     				categoriesUsed.add(categoryCheck);
     			}
                 else{
-                    JOptionPane.showMessageDialog(panel, "Min and max not okay", "fahoihfnaolif", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(panel, "Min and max invalid", "Categories' ranges overlap or min is not smaller than max. Please re-enter ranges.", JOptionPane.ERROR_MESSAGE);
                 }
           }
         });
@@ -323,7 +345,7 @@ public class GUI{
     								categoriesUsed.add(categoryCheck);
     			}
                 else{
-                    JOptionPane.showMessageDialog(panel, "Min and max not okay", "fahoihfnaolif", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(panel, "Min and max invalid", "Categories' ranges overlap or min is not smaller than max. Please re-enter ranges.", JOptionPane.ERROR_MESSAGE);
                 }
           }
         });
@@ -389,16 +411,28 @@ public class GUI{
 				}	
     			
                 else{
-                    JOptionPane.showMessageDialog(panel, "Min and max not okay", "fahoihfnaolif", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(panel, "Min and max invalid", "Categories' ranges overlap or min is not smaller than max. Please re-enter ranges.", JOptionPane.ERROR_MESSAGE);
                 }
           }
         }); 
         return panelCategories;
     }
+
+    /**
+     * @serial changeIcon
+     * Changes icon displayed for processingGif label in the output panel.
+     * */
     
     public void changeIcon(ImageIcon img){
         processingGif.setIcon(img);
     }
+
+    /**
+     * @serial createPanelButtons
+     * Creates "ready" button. Once the ready button is clicked, the software will check if input and output folders have been selected, 
+     * add the selected categories to an arraylist, make an instance of the driver class, and start the driver thread.
+     * @return JPanel panelButtons
+     * */
 
     public JPanel createPanelButtons(){ //uses flowlayout
         JPanel panelButtons = new JPanel();
@@ -423,17 +457,17 @@ public class GUI{
                     readyButton.setEnabled(false);
                     
                     //code that adds to catArray.
-		    for (String c: categoriesUsed){
-			if (c.equals("red")){
-		    		catArray.add(new Category(c, Integer.parseInt(minRed.getText()), Integer.parseInt(maxRed.getText()));
-			} 
-			else if (c.equals("blue")){
-		    		catArray.add(new Category(c, Integer.parseInt(minBlue.getText()), Integer.parseInt(maxBlue.getText()));
-			}
-			else{
-		    		catArray.add(new Category(c, Integer.parseInt(minGreen.getText()), Integer.parseInt(minGreen.getText()));
-			}
-		    }
+		            for (String c: categoriesUsed){
+            			if (c.equals("red")){
+            		    		catArray.add(new Category(c, Integer.parseInt(minRed.getText()), Integer.parseInt(maxRed.getText())));
+            			} 
+            			else if (c.equals("blue")){
+            		    		catArray.add(new Category(c, Integer.parseInt(minBlue.getText()), Integer.parseInt(maxBlue.getText())));
+            			}
+            			else{
+            		    		catArray.add(new Category(c, Integer.parseInt(minGreen.getText()), Integer.parseInt(minGreen.getText())));
+            			}
+        		    }
 					     
                     pro = new Driver(inputFolder, outputFolder,catArray, gui);
                     pro.start();
@@ -449,19 +483,13 @@ public class GUI{
             }
         });
 
-//         JButton cancelButton = new JButton("Cancel");
-//         cancelButton.setBackground(customOrange);
-//         panelButtons.add(cancelButton);
-//         cancelButton.addActionListener(new ActionListener(){
-//             public void actionPerformed(ActionEvent e){
-//                 // Image img = Toolkit.getDefaultToolkit().createImage("giphyNew.gif");
-//                 // ImageIcon imageI = new ImageIcon(img);
-//                 processingGif.setIcon(null); //temp test if gif disappears correctly
-//             }
-//         });
-
         return panelButtons;
     }
+
+    /**
+     * @serial createOutputPanel
+     * Creates JPanel called outputPanel where information and images from the processed frames will be displayed
+     * */
 
     public void createOutputPanel(JPanel outputPanel){
         // outputPanel.setBorder(BorderFactory.createLineBorder(Color.red)); //outlines output panel
@@ -473,6 +501,12 @@ public class GUI{
         outputPanel.add(createPanelFrames());
         outputPanel.add(createPanelOutputLabels());
     }
+
+    /**
+     * @serial createPanelFrames
+     * Creates JPanel called panelFrames where processed frames will be displayed
+     * @return panelFrames
+     * */
 
     public JPanel createPanelFrames(){
         panelFrames = new JPanel();
@@ -502,6 +536,12 @@ public class GUI{
     //     return null;
     // }
 
+    /**
+     * @serial createArrayofProcessedFrames
+     * Creates an arrayList of all the processed frames in output folder.
+     * @return ArrayList<File> foundProcessedFrames
+     * */
+
     public ArrayList<File> createArrayofProcessedFrames(File[] arrayOfFrames){
         ArrayList<File> foundProcessedFrames = new ArrayList<File>();
         for (File f: arrayOfFrames){
@@ -512,16 +552,25 @@ public class GUI{
         }
         return foundProcessedFrames;
     }
+
+    /**
+     * @serial createProcessedFrames
+     * Creates an JPanel called theFrames where processed images will be displayed with "previous" and "next" buttons.
+     * The panel is intially blank when software is run.
+     * */
     
     public void createProcessedFrames(){
         File folder = new File(outputFolder);
-        System.out.println("apfijpfj");
         if (folder.isDirectory()){
+//Should be removed
             File[] a = folder.listFiles();
             ArrayList<File> listOfProcessedFrames = new ArrayList<File>(Arrays.asList(a));
+//Proper code
             // File[] intialListOfProcessedFrames = folder.listFiles();
             // ArrayList<File> listOfProcessedFrames = createArrayofProcessedFrames(intialListOfProcessedFrames);
+
             // System.out.println(listOfProcessedFrames.length);
+
             panelFrames.remove(processingGif);
 
             JPanel theFrames = new JPanel();
@@ -533,18 +582,6 @@ public class GUI{
             JLabel displayProcessedGif = new JLabel();
             index = 0;
             Image img = Toolkit.getDefaultToolkit().createImage(outputFolder + "\\" + (listOfProcessedFrames.get(index)).getName());
-
-// Section to be removed
-            // Image img = null;
-            // for (File f: listOfProcessedFrames){
-            //    String name = listOfProcessedFrames[index].getName();
-            //    if (name.substring(name.length()-14).equals("_processed.gif"));
-            //       img = Toolkit.getDefaultToolkit().createImage(outputFolder + "\\" + listOfProcessedFrames[0].getName());
-            //       break;
-            //    }
-            // }
-            // Image img = findImageInOutputFolder(listOfProcessedFrames, index); //should not return null
-
             ImageIcon iconToDisplay = new ImageIcon(img);
             displayProcessedGif.setIcon(iconToDisplay);
             displayedProcessedGifName.setText((listOfProcessedFrames.get(index)).getName());
@@ -583,7 +620,6 @@ public class GUI{
                     }
                 }
             });
-
             
             if ((index + 1)>= listOfProcessedFrames.size()){
                 next.setEnabled(false);
@@ -617,6 +653,12 @@ public class GUI{
             System.out.println("File is not a directory.");
         }
     }
+
+    /**
+     * @serial createPanelOutputLabels
+     * Creates a JPanel called panelOutputLabels where information about the processed frames will be displayed in JTable.
+     * @return JPanel panelOutputLabels
+     * */
 
     public JPanel createPanelOutputLabels(){
         col = new String[][]{{"Number of Frames Detected: ","     ", "Number of Disks in Red Cat.: ", "     "}, //easier solution to create JTable
