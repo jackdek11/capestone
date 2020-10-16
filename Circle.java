@@ -62,7 +62,7 @@ public class Circle{
       * This method sets the colours of discs/circles in a particular category
       * @param cat This is an array of type Category with all the discs that needs their colour set
       */
-      public void setColor(Category[] cat){
+      public void setColor(ArrayList<Category> cat){
             for(Category c : cat){
                 if (c.getMin <= radius){
                     if(c.getMax >= radius){
