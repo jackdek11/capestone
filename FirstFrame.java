@@ -19,10 +19,12 @@ public class FirstFrame extends Frame {
     private ArrayList<ArrayList<Pixel>> ObjectLines ;
 
     /**
-     * @serial FirstFrame
-     * super from the Frame constructor. Added initialization of the ObjectLines
-     * Arraylist. This also calls the readLines() method
-     * */
+     * Super from the Frame constructor. This also calls the readLines() method and initialises the objectLines variable
+     * @param fileName This initialises the filename variable
+     * @param filepath This initialises the filepath variable
+     * @param catArray This initialises the catArray variable
+     * @param gui This initialises the gui variable
+     */
 
     public FirstFrame(String filename, String filepath, ArrayList<Category> catArray, GUI gui){
         super(filename, filepath, catArray, gui);
@@ -34,7 +36,6 @@ public class FirstFrame extends Frame {
     }
 
     /**
-     * @serial readLines
      * This method separates the lines from the Pixel array and sends them seperately
      * to the buildlines method. It then calls the merge method to finish linking the
      * pixels in frame.
@@ -50,10 +51,17 @@ public class FirstFrame extends Frame {
         getObjects();
     }
 
+    /**
+    * This method sets the index in the pixel array
+    * @param index This is the index to be set
+    */
     public void setIndex(int index){
         this.index=index;
     }
 
+    /**
+    * This method identifies all the circles in the first frame and adds to the circles arraylist
+    */
     public void getObjects(){
         for (int i=0;i<super.getObjectsArray().size();i++){
             if(super.getObjectsArray().get(i).checkCircle()){
@@ -65,7 +73,6 @@ public class FirstFrame extends Frame {
     }
 
     /**
-     * @serial mergeLines
      * This method checks the proximity of pixels in the middle of the object
      * pixel lines to link them
      * */
@@ -89,12 +96,11 @@ public class FirstFrame extends Frame {
     }
 
     /**
-     * @serial buildLines
-     * Builds Object lines. When a pixel above a threshold is found, a new line is
-     * started. If the next pixel is not also above that threshold, the line is
-     * ended
-     * */
-
+     * This method builds Object lines. When a pixel above a threshold is found, a new line is
+     * started. If the next pixel is not also above that threshold, the line is ended
+     * @param pixels This is arraylist of pixels that the object lines are built from
+     * @return int Returns the temporary offset as an integer
+     */
     public int buildLines(ArrayList<Pixel> pixels){
         ArrayList<Pixel> newLine = new ArrayList<Pixel>() ;
         int tempOffset=0;
@@ -116,14 +122,26 @@ public class FirstFrame extends Frame {
         return tempOffset;
     }
 
+    /**
+    * This method returns the number of objects 
+    * @return int Returns the answer as an integer
+    */
     public int getNumberOfObjects(){
         return objects.size();
     }
 
+    /**
+    * This method returns the number of circles 
+    * @return int Returns the answer as an integer
+    */    
     public int getNumberOfCircles(){
         return circles.size();
     }
 
+    /**
+    * This method returns the step reference by adding the width and index and subtracting the step reference
+    * @return int Returns the answer as an integer
+    */
     public int getStepRef(){
         return width+index-stepRef;
     }
