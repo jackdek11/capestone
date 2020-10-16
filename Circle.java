@@ -5,12 +5,16 @@
 * @since 28/08/2020
 */
 import java.util.ArrayList;
+
+import java.awt.image.BufferedImage;
+import java.awt.Color;
 import java.awt.*;
 
 public class Circle{
     public int radius;
     public ArrayList<Pixel> pixels;
     private Color color;
+    int[] center;
     
     /**
     * The constructor of the Circle class
@@ -46,6 +50,24 @@ public class Circle{
         return color.getRGB();
     }
 
+	/**
+      * This method sets the colours of discs/circles in a particular category
+      * @param cat This is an array of type Category with all the discs that needs their colour set
+      */
+
+    public void setColor(ArrayList<Category> cat){
+        for(Category c : cat){
+            if (c.getMin() <= radius){
+                if(c.getMax() >= radius){
+                    if ((c.getCategoryColour()).equals("red")){
+                        color = Color.red;
+                    }
+                    if ((c.getCategoryColour()).equals("blue")){
+                        color = Color.blue;
+                    }
+                    else{
+                        color = Color.green;
+                     }
         // radius=longestPixelChain/2;
 //         if(radius<4){
 //             changeColour(0);
@@ -56,31 +78,31 @@ public class Circle{
 //         else if(8<=radius){
 //             changeColour(2);
 //         }
-    // }
+ 
     
-      /**
-      * This method sets the colours of discs/circles in a particular category
-      * @param cat This is an array of type Category with all the discs that needs their colour set
-      */
-      public void setColor(ArrayList<Category> cat){
-            for(Category c : cat){
-                if (c.getMin() <= radius){
-                    if(c.getMax() >= radius){
-                        if ((c.getCategoryColour()).equals("red")){
-                        	color = Color.red;
-                    	}
-                    	if ((c.getCategoryColour()).equals("blue")){
-                        	color = Color.blue;
-                    	}
-                    	else{
-                       	 	color = Color.green;
-			}
+      
+    //   public void setColor(Category[] cat){
+//             for(Category c : cat){
+//                 if (c.getMin <= radius){
+//                     if(c.getMax >= radius){
+//                         color = c.getCategoryColor();
+// >>>>>>> d90134c0cfa7e97bcf429e51c188c7f6d21fde1f
                         return;
                     }
                 }
             }
+        
         color = Color.YELLOW; //circle does not fall into category
-      }
+    }
+
+    // public void setLongestPixelChain(int longestPixelChain){
+//         radius = longestPixelChain;
+//     }  
+
+
+    public void setCenter(int[] c){
+        center = c;
+    }  
 
       /**
       * This method sets the method to the longest pixel chain
