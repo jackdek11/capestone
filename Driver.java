@@ -1,3 +1,12 @@
+/**
+* This class takes in a file directory to unpack and evaluates all the .gif files within the inputted directory. The driver checks 
+* that all the files within the directory are the correct format, and builds Frame objects from them, the first frame to be built 
+* being a FirstFrame object. The driver also tells the Frame objects when to start building their objects, as well as and contains 
+* all the shared data structures used by the remaining objects
+* @author Amy Solomons
+* @version 1.0
+* @since 15/08/2020
+*/
 import java.io.File;
 import java.util.*;
 import java.awt.Toolkit;
@@ -18,6 +27,13 @@ public class Driver extends Thread{
     private GUI gui;
     private String inFolder, outFolder;
 
+    /**
+    * Constructor for the Driver class
+    * @param inputFolder initialises the inputFolder variable
+    * @param outputFolder initialises the outputFolder variable
+    * @param catArray initialises the catArray variable
+    * @param gui initialises the gui variable    
+    */
     public Driver(String inputFolder, String outputFolder, ArrayList<Category> catArray, GUI gui){
         inFolder=inputFolder;
         outFolder=outputFolder;
@@ -32,6 +48,10 @@ public class Driver extends Thread{
         System.out.println(firstF.getStepRef());
     }
 
+    /**
+    * This method loads a gif file from the directory selected by the user
+    * @param gifFolder This is the specified folder selected by the user to be loaded
+    */
     public void LoadVideo(File gifFolder) {
         File[] gif = gifFolder.listFiles();
         Arrays.sort(gif);
@@ -81,6 +101,10 @@ public class Driver extends Thread{
         }
     }
 
+    /**
+    * This method checks if the file format and size is suitable to be added to the list of frames.
+    * @param f This is the file to be checked
+    */
     public boolean checkFile(File f){
         boolean okay = false;
         if(checkFileFormat(f)) {
@@ -100,7 +124,12 @@ public class Driver extends Thread{
         return okay;
     }
 
-    public boolean checkFileFormat(File file) { //checks if frame is a Gif. Important for testing.
+    /**
+    * This method checks if the loaded file is a GIF or not
+    * @param file This is the file to be checked
+    * @return boolean Returns the answer as a boolean value
+    */
+    public boolean checkFileFormat(File file) { 
         boolean isGif = false;
         String nameOfGif = file.getName();
         if (nameOfGif.substring(nameOfGif.length()-4).equals(".gif")) {
@@ -109,6 +138,12 @@ public class Driver extends Thread{
         return isGif;
     }
 
+    /**
+    * This method checks if the size of the file is the same as the size of the first frame. 
+    * This ensures that each frame does not have transparent borders or is not smaller than the first frame detected.
+    * @param file This is the file to be checked
+    * @return Returns the answer as a boolean value
+    */
     public boolean checkSize(Frame file) {
         boolean widthFine = false;
         boolean heightFine = false;
@@ -121,6 +156,11 @@ public class Driver extends Thread{
         return widthFine && heightFine;
     }
 
+    /**
+    * This method checks that the width provided as an argument is the same as the width of the first frame.
+    * @param w This is the width provided that the width of the first frame is checked against
+    * @return boolean Returns the answer as a boolean value
+    */
     public boolean widthOkay(int w) { //ensures frame doesn't have transparent borders
         boolean okay = false;
         if(w == firstF.getWidth()) {
@@ -129,6 +169,11 @@ public class Driver extends Thread{
         return okay;
     }
 
+    /**
+    * This method checks that the height provided as an argument is the same as the width of the first frame.
+    * @param h This is the height provided that the height of the first frame is checked against
+    * @return boolean Returns the answer as a boolean value
+    */    
     public boolean heightOkay(int h) { //ensures frame doesn't have transparent borders
         boolean okay = false;
         if(h == firstF.getHeight()) {
@@ -137,6 +182,10 @@ public class Driver extends Thread{
         return okay;
     }
 
+    
+    /**
+    * This method runs the Driver class and starts loading the data from the gifFolder specified
+    */
     public void run(){
         boolean working = true;
         Image img = Toolkit.getDefaultToolkit().createImage("giphyNew.gif");
@@ -155,6 +204,13 @@ public class Driver extends Thread{
         }
     }
 
+
+    /**
+    * Another constructor for the Driver class
+    * @param inputFolder initialises the inputFolder variable
+    * @param outputFolder initialises the outputFolder variable
+    * @param gui initialises the gui variable    
+    */
     public Driver(String inputFolder, String outputFolder, GUI gui){ //possibly removed later
         gifFrames = new File(inputFolder);
         currentImage=new ArrayList<ArrayList<Pixel>>();
