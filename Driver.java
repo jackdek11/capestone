@@ -5,20 +5,20 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Driver extends Thread{
-    private static ArrayList<Frame> frames;
-    private static ArrayList<ArrayList<Pixel>> currentImage;
-    private static File gif;
-    private static FirstFrame firstF;
+    private  ArrayList<Frame> frames;
+    private  ArrayList<ArrayList<Pixel>> currentImage;
+    private  File gif;
+    private  FirstFrame firstF;
     private int numObjects,numCircles;
-    private static Frame tempFrame;
-    private static int width, height, numOfFrames;
-    private static boolean foundFirst;
-    private static File gifFrames;
-    private static Category[] arrayOfCategories;
-    private static GUI gui;
-    private static String inFolder, outFolder;
+    private  Frame tempFrame;
+    private  int width, height, numOfFrames;
+    private  boolean foundFirst;
+    private  File gifFrames;
+    private  ArrayList<Category> arrayOfCategories;
+    private GUI gui;
+    private String inFolder, outFolder;
 
-    public Driver(String inputFolder, String outputFolder, Category[] catArray, GUI gui){
+    public Driver(String inputFolder, String outputFolder, ArrayList<Category> catArray, GUI gui){
         inFolder=inputFolder;
         outFolder=outputFolder;
         numCircles=0;
@@ -28,7 +28,7 @@ public class Driver extends Thread{
         arrayOfCategories = catArray;
     }
 
-    public static void proofOfConcept(){
+    public void proofOfConcept(){
         System.out.println(firstF.getStepRef());
     }
 
@@ -38,12 +38,12 @@ public class Driver extends Thread{
         numOfFrames = 0; // was 1
         foundFirst = false;
         for (File g: gif) {
-            String pathOfGifFile = gifFolder.getName() + "/" + g.getName();
+            String pathOfGifFile = gifFolder.getName() + "\\" + g.getName();
             if(checkFile(g)) { //check file will check if file is a gif or not
                 if (!foundFirst) {
-                    firstF = new FirstFrame(pathOfGifFile,arrayOfCategories,gui); //need to parse category array as well
+                    firstF = new FirstFrame(g.getName(), pathOfGifFile,arrayOfCategories,gui); //need to parse category array as well
                     currentImage= firstF.getPixelArray();
-                    firstF.createProcessedFrame(outFolder);
+                    // firstF.createProcessedFrame(outFolder);
                     frames.add(firstF);
                     firstF.setIndex(0);
                     width = firstF.getWidth();
@@ -51,13 +51,14 @@ public class Driver extends Thread{
                     numCircles=firstF.getNumberOfCircles();
                     numObjects=firstF.getNumberOfObjects();
                     foundFirst = true;
+                    // firstF.createProcessedFrame(outFolder);
                 }
                 else if(numOfFrames==firstF.getStepRef()){
-                    firstF=new FirstFrame(pathOfGifFile,arrayOfCategories,gui);
+                    firstF=new FirstFrame(g.getName(), pathOfGifFile,arrayOfCategories,gui);
                     firstF.setIndex(numOfFrames);
                     numObjects+=firstF.getNumberOfObjects();
                     numCircles+=firstF.getNumberOfCircles();
-                    firstF.createProcessedFrame(outFolder);
+                    // firstF.createProcessedFrame(outFolder);
                     frames.add(firstF);
                 }
                 else {
@@ -65,7 +66,7 @@ public class Driver extends Thread{
                     tempFrame.setPixelArray(currentImage);
                     tempFrame.marchForwardThroughBuffer();
                     currentImage = tempFrame.getPixelArray();
-                    tempFrame.createProcessedFrame(outFolder);
+                    // tempFrame.createProcessedFrame(outFolder);
                     frames.add(tempFrame); //need to parse category array as well
                 }
                 numOfFrames++;
@@ -73,18 +74,20 @@ public class Driver extends Thread{
             else {
                 System.out.println("File "+ numOfFrames + " in " + gifFolder.getName()+ " is not a gif.");
             }
-            gui.changeNumberOfFramesDetected(numOfFrames); //.dat file adds. need to move num of frame
+            gui.changeNumberOfFramesDetected(numOfFrames);
             gui.changeNumberOfDisksDetected(numCircles);
             gui.changeNumberOfObjectsDetected(numObjects);
             //numOfFrames++;
         }
-        //proofOfConcept();
     }
 
-    public static boolean checkFile(File f){
+    public boolean checkFile(File f){
         boolean okay = false;
         if(checkFileFormat(f)) {
-            Frame tempFrame = new Frame("Dir6/"+f.getName());
+            System.out.println(inFolder + "\\" +f.getName());
+            Frame tempFrame = new Frame(inFolder + "\\" +f.getName());
+            // String fN = "Dir6/" +f.getName();
+//             Frame tempFrame = new Frame(fN);
             if(foundFirst){
                 if(checkSize(tempFrame)) {
                     okay = true;
@@ -97,7 +100,7 @@ public class Driver extends Thread{
         return okay;
     }
 
-    public static boolean checkFileFormat(File file) { //checks if frame is a Gif. Important for testing.
+    public boolean checkFileFormat(File file) { //checks if frame is a Gif. Important for testing.
         boolean isGif = false;
         String nameOfGif = file.getName();
         if (nameOfGif.substring(nameOfGif.length()-4).equals(".gif")) {
@@ -106,7 +109,7 @@ public class Driver extends Thread{
         return isGif;
     }
 
-    public static boolean checkSize(Frame file) {
+    public boolean checkSize(Frame file) {
         boolean widthFine = false;
         boolean heightFine = false;
         if (widthOkay(file.getWidth())) {
@@ -118,7 +121,7 @@ public class Driver extends Thread{
         return widthFine && heightFine;
     }
 
-    public static boolean widthOkay(int w) { //ensures frame doesn't have transparent borders
+    public boolean widthOkay(int w) { //ensures frame doesn't have transparent borders
         boolean okay = false;
         if(w == firstF.getWidth()) {
             okay = true;
@@ -126,7 +129,7 @@ public class Driver extends Thread{
         return okay;
     }
 
-    public static boolean heightOkay(int h) { //ensures frame doesn't have transparent borders
+    public boolean heightOkay(int h) { //ensures frame doesn't have transparent borders
         boolean okay = false;
         if(h == firstF.getHeight()) {
             okay = true;
