@@ -1,3 +1,12 @@
+/** 
+* This class is used to display the program as a GUI to the user and allow them
+* to interact with it
+* @author Amy Solomons
+* @author Rifqah Francis
+* @version 1.0
+* @since 20/09/2020
+*/
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
