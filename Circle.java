@@ -64,9 +64,17 @@ public class Circle{
       */
       public void setColor(ArrayList<Category> cat){
             for(Category c : cat){
-                if (c.getMin <= radius){
-                    if(c.getMax >= radius){
-                        color = c.getCategoryColor();
+                if (c.getMin() <= radius){
+                    if(c.getMax() >= radius){
+                        if ((c.getCategoryColour()).equals("red")){
+                        	color = Color.red;
+                    	}
+                    	if ((c.getCategoryColour()).equals("blue")){
+                        	color = Color.blue;
+                    	}
+                    	else{
+                       	 	color = Color.green;
+			}
                         return;
                     }
                 }
