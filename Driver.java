@@ -97,6 +97,9 @@ public class Driver extends Thread{
             gui.changeNumberOfFramesDetected(numOfFrames);
             gui.changeNumberOfDisksDetected(numCircles);
             gui.changeNumberOfObjectsDetected(numObjects);
+            gui.changeNumberDisksInRed((arrayOfCategories.get(0)).getNumberOfDisksInCat());
+            gui.changeNumberDisksInBlue((arrayOfCategories.get(1)).getNumberOfDisksInCat());
+            gui.changeNumberDisksInGreen((arrayOfCategories.get(2)).getNumberOfDisksInCat());
             //numOfFrames++;
         }
     }

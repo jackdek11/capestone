@@ -522,10 +522,11 @@ public class GUI{
                         v.printStackTrace();
                     }
                     readyButton.setEnabled(true);
+              //       System.out.println((catArray.get(0)) + (catArray.get(1)) + (catArray.get(2)));
                     createProcessedFrames();
-		    changeNumberDisksInRed((catArray.get(0)).getNumberOfDisksInCat());
-	            changeNumberDisksInBlue((catArray.get(1)).getNumberOfDisksInCat());
-		    changeNumberDisksInGreen((catArray.get(2)).getNumberOfDisksInCat());
+		            // changeNumberDisksInRed((catArray.get(0)).getNumberOfDisksInCat());
+	             //    changeNumberDisksInBlue((catArray.get(1)).getNumberOfDisksInCat());
+		            // changeNumberDisksInGreen((catArray.get(2)).getNumberOfDisksInCat());
                 }
             }
         });

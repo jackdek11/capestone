@@ -24,6 +24,7 @@ public class Category{
 			this.colour = colour;
 			this.min = min;
 			this.max = max;
+			circlesInCategory = new ArrayList<Circle>();
 	}
 	
 	/** 
@@ -72,6 +73,7 @@ public class Category{
 	*/
 	public int getNumberOfDisksInCat(){
 		return circlesInCategory.size();
+		// return 0;
 	}
 	
 	// public int getShortest() {
