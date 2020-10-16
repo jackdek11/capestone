@@ -229,13 +229,14 @@ public class GUI{
     	JPanel redCategory = new JPanel();
 
         JRadioButton radioRed = new JRadioButton("Red");
+        radioRed.setEnabled(false);
         JRadioButton radioBlue = new JRadioButton("Blue");
         radioBlue.setEnabled(false);
         JRadioButton radioGreen = new JRadioButton("Green");
         radioGreen.setEnabled(false);
         
         minRed = new JTextField("Minimum");
-        minRed.setEnabled(false);
+        minRed.setEnabled(true);
         maxRed = new JTextField("Maximum");
         maxRed.setEnabled(false);
         minBlue = new JTextField("Minimum");
@@ -260,9 +261,23 @@ public class GUI{
             public void itemStateChanged(ItemEvent event) {
                 int clicked = event.getStateChange();
                 if (clicked == ItemEvent.SELECTED) {
-                    minRed.setEnabled(true);
-                }	
+                    // minRed.setEnabled(true);
+                //}	
                 //add else to remove 
+                    
+                    if (Integer.parseInt(minRed.getText()) <= Integer.parseInt(maxRed.getText())) {
+                        categoryCheck = "red";
+                        categoriesUsed.add(categoryCheck);
+                        // radioBlue.setEnabled(true);
+                        minBlue.setEnabled(true);
+                        minRed.setEnabled(false);
+                        maxRed.setEnabled(false);
+                    }
+                     else{
+                        JOptionPane.showMessageDialog(panel, "Min and max invalid", "Categories' ranges overlap or min is not smaller than max. Please re-enter ranges.", JOptionPane.ERROR_MESSAGE);
+                        radioRed.setSelected(false);
+                    }
+                }
             }
     	});
         
@@ -274,8 +289,8 @@ public class GUI{
  
             }
             public void insertUpdate(DocumentEvent e) {
-                  minRed.setEnabled(false);
-            maxRed.setEnabled(true);
+                  // minRed.setEnabled(false);
+                    maxRed.setEnabled(true);
             }
             
         });
@@ -289,15 +304,16 @@ public class GUI{
             }
           
           public void insertUpdate(DocumentEvent e) {
-            maxRed.setEnabled(false);
-    			radioBlue.setEnabled(true);
-    			if (Integer.parseInt(minRed.getText()) <= Integer.parseInt(maxRed.getText())) {
-    				categoryCheck = "red";
-    				categoriesUsed.add(categoryCheck);
-    			}
-                else{
-                    JOptionPane.showMessageDialog(panel, "Min and max invalid", "Categories' ranges overlap or min is not smaller than max. Please re-enter ranges.", JOptionPane.ERROR_MESSAGE);
-                }
+            radioRed.setEnabled(true);
+                // maxRed.setEnabled(false);
+    			// radioBlue.setEnabled(true);
+    			// if (Integer.parseInt(minRed.getText()) <= Integer.parseInt(maxRed.getText())) {
+    			// 	categoryCheck = "red";
+    			// 	categoriesUsed.add(categoryCheck);
+    			// }
+       //          else{
+       //              JOptionPane.showMessageDialog(panel, "Min and max invalid", "Categories' ranges overlap or min is not smaller than max. Please re-enter ranges.", JOptionPane.ERROR_MESSAGE);
+       //          }
           }
         });
             
@@ -315,7 +331,23 @@ public class GUI{
             public void itemStateChanged(ItemEvent event) {
                 int clicked = event.getStateChange();
                 if (clicked == ItemEvent.SELECTED) {
-                    minBlue.setEnabled(true);
+                    // minBlue.setEnabled(true);
+                    
+                    if (Integer.parseInt(maxBlue.getText()) >= Integer.parseInt(minBlue.getText())) {
+                        if ((Integer.parseInt(minBlue.getText()) > Integer.parseInt(minRed.getText())) && 
+                            (Integer.parseInt(minBlue.getText()) > Integer.parseInt(maxRed.getText())) ||
+                            (Integer.parseInt(minBlue.getText())) < (Integer.parseInt(minRed.getText())))
+                                        categoryCheck = "blue";
+                                        categoriesUsed.add(categoryCheck);
+                                        minBlue.setEnabled(false);
+                                        maxBlue.setEnabled(false);
+                                        minGreen.setEnabled(true);
+                                        // radioGreen.setEnabled(true);
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(panel, "Min and max invalid", "Categories' ranges overlap or min is not smaller than max. Please re-enter ranges.", JOptionPane.ERROR_MESSAGE);
+                        radioBlue.setSelected(false);        
+                    }
                 }	
                 //add else to remove 
             }
@@ -329,8 +361,8 @@ public class GUI{
  
             }
             public void insertUpdate(DocumentEvent e) {
-                  minBlue.setEnabled(false);
-            maxBlue.setEnabled(true);
+                 // minBlue.setEnabled(false);
+                 maxBlue.setEnabled(true);
             }
             
         });
@@ -344,18 +376,19 @@ public class GUI{
             }
           
           public void insertUpdate(DocumentEvent e) {
-            maxBlue.setEnabled(false);
-    			radioGreen.setEnabled(true);
-    			if (Integer.parseInt(maxBlue.getText()) >= Integer.parseInt(minBlue.getText())) {
-    				if ((Integer.parseInt(minBlue.getText()) > Integer.parseInt(minRed.getText())) && 
-    					(Integer.parseInt(minBlue.getText()) > Integer.parseInt(maxRed.getText())) ||
-    					(Integer.parseInt(minBlue.getText())) < (Integer.parseInt(minRed.getText())))
-    								categoryCheck = "blue";
-    								categoriesUsed.add(categoryCheck);
-    			}
-                else{
-                    JOptionPane.showMessageDialog(panel, "Min and max invalid", "Categories' ranges overlap or min is not smaller than max. Please re-enter ranges.", JOptionPane.ERROR_MESSAGE);
-                }
+            radioBlue.setEnabled(true);
+            // maxBlue.setEnabled(false);
+    			// radioGreen.setEnabled(true);
+    			// if (Integer.parseInt(maxBlue.getText()) >= Integer.parseInt(minBlue.getText())) {
+    			// 	if ((Integer.parseInt(minBlue.getText()) > Integer.parseInt(minRed.getText())) && 
+    			// 		(Integer.parseInt(minBlue.getText()) > Integer.parseInt(maxRed.getText())) ||
+    			// 		(Integer.parseInt(minBlue.getText())) < (Integer.parseInt(minRed.getText())))
+    			// 					categoryCheck = "blue";
+    			// 					categoriesUsed.add(categoryCheck);
+    			// }
+       //          else{
+       //              JOptionPane.showMessageDialog(panel, "Min and max invalid", "Categories' ranges overlap or min is not smaller than max. Please re-enter ranges.", JOptionPane.ERROR_MESSAGE);
+       //          }
           }
         });
     	
@@ -373,7 +406,26 @@ public class GUI{
             public void itemStateChanged(ItemEvent event) {
                 int clicked = event.getStateChange();
                 if (clicked == ItemEvent.SELECTED) {
-                    minGreen.setEnabled(true);
+                        // minGreen.setEnabled(true);
+                        if (Integer.parseInt(maxGreen.getText()) >= Integer.parseInt(minGreen.getText())){
+                            if (((Integer.parseInt(minGreen.getText()) > Integer.parseInt(minBlue.getText())) && 
+                                    (Integer.parseInt(minGreen.getText()) > Integer.parseInt(minRed.getText())) &&
+                                    (Integer.parseInt(minGreen.getText()) > Integer.parseInt(maxBlue.getText())) &&
+                                    (Integer.parseInt(minGreen.getText()) > Integer.parseInt(maxRed.getText()))) ||
+                                    ((Integer.parseInt(maxGreen.getText()) < Integer.parseInt(minBlue.getText())) &&
+                                    (Integer.parseInt(minGreen.getText()) > Integer.parseInt(maxRed.getText()))) ||
+                                    ((Integer.parseInt(maxGreen.getText()) < Integer.parseInt(minBlue.getText())) &&
+                                    (Integer.parseInt(maxGreen.getText()) < Integer.parseInt(maxGreen.getText())))){
+                                        categoryCheck = "green";
+                                        categoriesUsed.add(categoryCheck);
+                                        minGreen.setEnabled(false);
+                                        maxGreen.setEnabled(false);
+                             }
+                        }   
+                        else{
+                            JOptionPane.showMessageDialog(panel, "Min and max invalid", "Categories' ranges overlap or min is not smaller than max. Please re-enter ranges.", JOptionPane.ERROR_MESSAGE);
+                            radioGreen.setSelected(false);
+                        }
                 }	
                 //add else to remove 
             }
@@ -387,8 +439,8 @@ public class GUI{
  
             }
             public void insertUpdate(DocumentEvent e) {
-                  minGreen.setEnabled(false);
-            maxGreen.setEnabled(true);
+                  // minGreen.setEnabled(false);
+                    maxGreen.setEnabled(true);
             }
             
         });
@@ -402,26 +454,9 @@ public class GUI{
             }
           
           public void insertUpdate(DocumentEvent e) {
-            maxGreen.setEnabled(false);
-    			//radioGreen.setEnabled(true);
-				if (Integer.parseInt(maxGreen.getText()) >= Integer.parseInt(minGreen.getText())){
-					if (((Integer.parseInt(minGreen.getText()) > Integer.parseInt(minBlue.getText())) && 
-							(Integer.parseInt(minGreen.getText()) > Integer.parseInt(minRed.getText())) &&
-							(Integer.parseInt(minGreen.getText()) > Integer.parseInt(maxBlue.getText())) &&
-							(Integer.parseInt(minGreen.getText()) > Integer.parseInt(maxRed.getText()))) ||
-							((Integer.parseInt(maxGreen.getText()) < Integer.parseInt(minBlue.getText())) &&
-							(Integer.parseInt(minGreen.getText()) > Integer.parseInt(maxRed.getText()))) ||
-							((Integer.parseInt(maxGreen.getText()) < Integer.parseInt(minBlue.getText())) &&
-							(Integer.parseInt(maxGreen.getText()) < Integer.parseInt(maxGreen.getText())))){
-								categoryCheck = "green";
-								categoriesUsed.add(categoryCheck);
-					}
+                // max.setEnabled(false);
+    			radioGreen.setEnabled(true);
 				
-				}	
-    			
-                else{
-                    JOptionPane.showMessageDialog(panel, "Min and max invalid", "Categories' ranges overlap or min is not smaller than max. Please re-enter ranges.", JOptionPane.ERROR_MESSAGE);
-                }
           }
         }); 
         return panelCategories;
