@@ -70,6 +70,9 @@ public class Driver extends Thread{
                     height = firstF.getHeight();
                     numCircles=firstF.getNumberOfCircles();
                     numObjects=firstF.getNumberOfObjects();
+                    numCat1=firstF.getCat1();
+                    numCat2=firstF.getCat2();
+                    numCat3=firstF.getCat3();
                     foundFirst = true;
                     // firstF.createProcessedFrame(outFolder);
                 }
@@ -78,6 +81,9 @@ public class Driver extends Thread{
                     firstF.setIndex(numOfFrames);
                     numObjects+=firstF.getNumberOfObjects();
                     numCircles+=firstF.getNumberOfCircles();
+                    numCat1+=firstF.getCat1();
+                    numCat2+=firstF.getCat2();
+                    numCat3+=firstF.getCat3();
                     // firstF.createProcessedFrame(outFolder);
                     frames.add(firstF);
                 }
@@ -97,9 +103,9 @@ public class Driver extends Thread{
             gui.changeNumberOfFramesDetected(numOfFrames);
             gui.changeNumberOfDisksDetected(numCircles);
             gui.changeNumberOfObjectsDetected(numObjects);
-            gui.changeNumberDisksInRed((arrayOfCategories.get(0)).getNumberOfDisksInCat());
-            gui.changeNumberDisksInBlue((arrayOfCategories.get(1)).getNumberOfDisksInCat());
-            gui.changeNumberDisksInGreen((arrayOfCategories.get(2)).getNumberOfDisksInCat());
+            gui.changeNumberDisksInRed(numCat1);
+            gui.changeNumberDisksInBlue(numCat2);
+            gui.changeNumberDisksInGreen(numCat3);
             //numOfFrames++;
         }
     }
