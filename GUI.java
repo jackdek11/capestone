@@ -616,6 +616,7 @@ public class GUI{
             // System.out.println(listOfProcessedFrames.length);
 	    if((listOfProcessedFrames.size())<1){
 		    processingGif.setText("No frames processed");
+		    return;
 	    }
 
             panelFrames.remove(processingGif);
