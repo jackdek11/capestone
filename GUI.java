@@ -523,6 +523,9 @@ public class GUI{
                     }
                     readyButton.setEnabled(true);
                     createProcessedFrames();
+		    changeNumberDisksInRed((catArray.get(0)).getNumberOfDisksInCat());
+	            changeNumberDisksInBlue((catArray.get(1)).getNumberOfDisksInCat());
+		    changeNumberDisksInGreen((catArray.get(2)).getNumberOfDisksInCat());
                 }
             }
         });
