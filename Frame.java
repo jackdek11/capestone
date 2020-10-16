@@ -1,3 +1,12 @@
+/**
+* This class is given an Object array from the previous image in the sequence and evaluates 
+* all the new pixels coming into frame, to see if they are part of an already identified 
+* image or if they are part of some new image
+* @author Jack de Kock
+* @version 1.0
+* @since 15/08/2020
+*/
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -29,6 +38,11 @@ public class Frame extends Component {
     protected GUI gui;
     private String filename, filepath;
 
+    /**
+    * This methods prints out 0 if the pixels from a specified index in the pixel array is 
+    * above the theshold of 50
+    * @param index This is the index it checks from
+    */
     public void printPan(int index){
         for (int i =0; i < height; i++) {
             for (int j = index; j < index+width; j++) {
@@ -42,6 +56,13 @@ public class Frame extends Component {
         }
     }
 
+    /**
+    * This method sets the ARGB values of of pixel
+    * @param pixel This is the pixel to be set
+    * @param temp This is a temporary arraylist of type Pixel that the pixel with set ARGB values is added to
+    * @param w This is a width to parse to the Pixel class
+    * @param h This is a height to parse to the Pixel class
+    */
     public void setPixelARGB(int pixel, ArrayList<Pixel> temp,int w,int h) {
         int red = (pixel >> 16) & 0xff;
         int green = (pixel >> 8) & 0xff;
@@ -49,6 +70,10 @@ public class Frame extends Component {
         temp.add(new Pixel(red,green,blue,w,h));
     }
 
+    /**
+    * This method scans an image's pixels
+    * @param image This is the image that must be scanned
+    */
     public void marchThroughImage(BufferedImage image) {
         for (int i = 0; i < height; i++) {
             ArrayList<Pixel> temp = new ArrayList<Pixel>();
@@ -60,6 +85,9 @@ public class Frame extends Component {
         }
     }
 
+    /**
+    * This method continues scanning through an image
+    */
     public void marchForwardThroughBuffer(){
         for (int i=0;i<height;i++){
             //pixelArray.get(i).remove(0);
@@ -68,6 +96,10 @@ public class Frame extends Component {
         }
     }
     
+    /**
+    * This method is used to create a processed frame and write to an output folder specified by the user
+    * @param outputFolder This is the output folder specified by the user
+    */
     public void createProcessedFrame(String outputFolder){ 
 
         // code to change image color
@@ -83,6 +115,13 @@ public class Frame extends Component {
         }
     }
 
+    /**
+    * This is the constructor for the Frame class
+    * @param filename Initialises the filename variable
+    * @param filePath Initialises the filePath variable
+    * @param catArray Initialises the catArray variable
+    * @param gui Initialises the gui variable
+    */
     public Frame(String filename, String filepath, ArrayList<Category> catArray, GUI gui){
         try {
             this.filename = filename;
@@ -102,6 +141,10 @@ public class Frame extends Component {
         }
     }
 
+    /**
+    * Another constructor for the Frame class
+    * @param filename This is the file that needs to be read
+    */
     public Frame(String filepath){
         try {
             image = ImageIO.read(new File(filepath));
@@ -119,11 +162,48 @@ public class Frame extends Component {
      *@return LinkedList<Pixel> objectPixels
      */
 
+    /**
+    * This method returns the width of a frame
+    * @return int Returns the width as an integer
+    */
     public int getWidth(){ return width; }
+    
+    /**
+    * This method returns the height of a frame
+    * @return int Returns the height as an integer
+    */    
     public int getHeight(){ return height; }
+    
+    /**
+    * This method returns all the pixels in the pixelArray
+    * @param i This is the index of the row in the pixelArray
+    * @param j This is the column in the pixelArray
+    * @return Pixel Returns all the pixels as type Pixel
+    */
     public Pixel getPixel(int i, int j){ return pixelArray.get(i).get(j); }
+    
+    /**
+    * This method sets the pixelArray
+    * @param pixelArray This is the pixel array to be set
+    */
     public void setPixelArray(ArrayList<ArrayList<Pixel>> pixelArray){ this.pixelArray=pixelArray; }
+    
+    /** 
+    * This method returns the pixel array
+    * @return ArrayList<ArrayList<Pixel>> Returns the pixel array as a nested arraylist of type Pixel
+    */
     public ArrayList<ArrayList<Pixel>> getPixelArray(){ return pixelArray; }
+    
+    /**
+    * This method returns an image
+    * @param image This is the image to be returned
+    * @return BufferedImage Returns the image as type BufferedImage
+    */
     public BufferedImage getImage(){return image;}
+    
+    /**
+    * This method returns all the objects in the objects array
+    * @return ArrayList<Object> Returns the objects as an arraylist of type Object
+    */
     public ArrayList<Object> getObjectsArray(){ return objects;}
 }
