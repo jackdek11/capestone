@@ -114,6 +114,16 @@ public class Frame extends Component {
             e.printStackTrace();
         }
     }
+    
+    public int getCat1(){
+        return categoryArray.get(0).getNumberOfDisksInCategory;   
+    }    
+    public int getCat2(){
+        return categoryArray.get(1).getNumberOfDisksInCategory;   
+    }   
+    public int getCat3(){
+        return categoryArray.get(2).getNumberOfDisksInCategory;   
+    }   
 
     /**
     * This is the constructor for the Frame class
