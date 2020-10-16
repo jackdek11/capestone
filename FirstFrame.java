@@ -15,8 +15,8 @@ public class FirstFrame extends Frame {
      * consecutive pixels above the threshold of 50
      * */
 
-    public int stepRef,index;
-    public ArrayList<ArrayList<Pixel>> ObjectLines ;
+    private int stepRef,index;
+    private ArrayList<ArrayList<Pixel>> ObjectLines ;
 
     /**
      * @serial FirstFrame
@@ -24,11 +24,11 @@ public class FirstFrame extends Frame {
      * Arraylist. This also calls the readLines() method
      * */
 
-    public FirstFrame(String filename, Category[] catArray, GUI gui){
-        super(filename, catArray, gui);
+    public FirstFrame(String filename, String filepath, ArrayList<Category> catArray, GUI gui){
+        super(filename, filepath, catArray, gui);
         index=0;
-        marchThroughImage(image);
-        stepRef=width;
+        marchThroughImage(super.getImage());
+        stepRef=super.getWidth();
         ObjectLines = new ArrayList<ArrayList<Pixel>>() ;
         readLines();
     }
@@ -42,8 +42,8 @@ public class FirstFrame extends Frame {
 
     public void readLines(){
         int temp=0;
-        for(int i=0;i<height;i++){
-            temp=Math.max(temp,buildLines(pixelArray.get(i)));
+        for(int i=0;i<super.getHeight();i++){
+            temp=Math.max(temp,buildLines((super.getPixelArray()).get(i)));
         }
         stepRef=temp;
         mergeLines() ;
@@ -55,10 +55,10 @@ public class FirstFrame extends Frame {
     }
 
     public void getObjects(){
-        for (int i=0;i<objects.size();i++){
-            if(objects.get(i).checkCircle()){
-                Circle tempCircle=objects.get(i).circlefy();
-                tempCircle.setColor(catArray);
+        for (int i=0;i<super.getObjectsArray().size();i++){
+            if(super.getObjectsArray().get(i).checkCircle()){
+                Circle tempCircle=super.getObjectsArray().get(i).circlefy();
+                tempCircle.setColor(super.categoryArray);
                 circles.add(tempCircle);
             }
         }
