@@ -66,7 +66,7 @@ public class FirstFrame extends Frame {
         for (int i=0;i<super.getObjectsArray().size();i++){
             if(super.getObjectsArray().get(i).checkCircle()){
                 Circle tempCircle=super.getObjectsArray().get(i).circlefy();
-                tempCircle.setColor(super.categoryArray);
+                tempCircle.setColor(super.catArray);
                 circles.add(tempCircle);
             }
         }

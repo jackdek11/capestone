@@ -34,7 +34,7 @@ public class Frame extends Component {
     protected ArrayList<Circle> circles;
     protected ArrayList<ArrayList<Pixel>> pixelArray;
     protected ArrayList<Object> objects;
-    protected ArrayList<Category> categoryArray;
+    protected ArrayList<Category> catArray;
     protected GUI gui;
     private String filename, filepath;
 
@@ -116,13 +116,13 @@ public class Frame extends Component {
     }
     
     public int getCat1(){
-        return categoryArray.get(0).getNumberOfDisksInCategory;   
+        return (catArray.get(0)).getNumberOfDisksInCat();   
     }    
     public int getCat2(){
-        return categoryArray.get(1).getNumberOfDisksInCategory;   
+        return catArray.get(1).getNumberOfDisksInCat();   
     }   
     public int getCat3(){
-        return categoryArray.get(2).getNumberOfDisksInCategory;   
+        return catArray.get(2).getNumberOfDisksInCat();   
     }   
 
     /**
@@ -136,7 +136,7 @@ public class Frame extends Component {
         try {
             this.filename = filename;
             this.filepath = filepath;
-            categoryArray = catArray;
+            this.catArray = catArray;
             this.gui = gui;
             image = ImageIO.read(new File(filepath));
                     // ImageIO.read(this.getClass().getResource(filename));

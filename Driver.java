@@ -20,7 +20,7 @@ public class Driver extends Thread{
     private  FirstFrame firstF;
     private int numObjects,numCircles;
     private  Frame tempFrame;
-    private  int width, height, numOfFrames;
+    private  int width, height, numOfFrames, numCat1, numCat2, numCat3;
     private  boolean foundFirst;
     private  File gifFrames;
     private  ArrayList<Category> arrayOfCategories;
