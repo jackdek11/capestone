@@ -1,0 +1,9 @@
+---
+version: "3.2"
+
+services:
+  gui:
+    build: ../src
+    container_name: gui
+    restart: unless-stopped
+
